@@ -1,0 +1,77 @@
+name: bench-compare
+
+# The comparison of airlock_pii with its baselines, on a clean machine: `make bench-compare`
+# is the one command that makes the published table, and this is where it is shown to work.
+#
+# Not on every pull request. The Presidio baselines need two spaCy models of 400 and 513 MB,
+# so the job runs where the table can change: the benchmark, the library, and what builds the
+# environment. It can also be started by hand.
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "bench/**"
+      - "packages/airlock-pii/**"
+      - "models.lock"
+      - "Makefile"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/bench-compare.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bench-compare-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      # Actions are pinned to commit SHAs: a tag can be moved, a commit cannot.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # The cache holds what uv downloaded, the two model wheels among it, and is keyed on
+      # the two locks: it is rebuilt when a pin changes and at no other time. It is not
+      # pruned, because pruning drops exactly the wheels that are worth keeping here.
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.23"
+          enable-cache: true
+          prune-cache: false
+          cache-suffix: bench-compare
+          cache-dependency-glob: |
+            uv.lock
+            bench/presidio/uv.lock
+
+      # The two model files of the Russian NER, as in the ci workflow.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: models
+          key: ner-models-${{ hashFiles('models.lock') }}
+
+      # Both locks are checked before anything is built from them.
+      - name: Lockfiles are up to date
+        run: |
+          uv lock --check
+          uv lock --check --project bench/presidio
+
+      # The one command: the NER model files, the data, the environment of the Presidio
+      # baselines from its lock, five detectors, the table.
+      # The results go outside the checkout, where no result of an earlier day lies.
+      - name: Comparison with the baselines
+        run: make bench-compare BENCH_RESULTS="$RUNNER_TEMP/bench-compare"
+
+      - name: The table, in the summary of the run
+        run: cat "$RUNNER_TEMP"/bench-compare/*_compare.md >> "$GITHUB_STEP_SUMMARY"
+
+      # Counts and ratios only: no text of the data is in a result.
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: bench-compare
+          path: ${{ runner.temp }}/bench-compare/
+          if-no-files-found: error

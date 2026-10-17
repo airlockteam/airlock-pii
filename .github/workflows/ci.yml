@@ -1,0 +1,78 @@
+name: ci
+
+# Pushes to other branches are covered by their pull request, so a PR commit runs once.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13", "3.14"]
+    env:
+      # Every `uv run` and `uv sync` of the job uses this interpreter.
+      UV_PYTHON: ${{ matrix.python }}
+    steps:
+      # Actions are pinned to commit SHAs: a tag can be moved, a commit cannot.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.23"
+          enable-cache: true
+          cache-suffix: python-${{ matrix.python }}
+
+      # Three locks: the workspace's, and those of the two projects that hold Presidio, which
+      # are projects of their own so that its packages stay out of the first.
+      - name: Lockfiles are up to date
+        run: |
+          uv lock --check
+          uv lock --check --project bench/presidio
+          uv lock --check --project packages/airlock-pii/tests_presidio
+
+      - name: Install
+        run: make setup
+
+      # The two model files of the Russian NER, 29 MB together. They are kept in a cache
+      # that is keyed on models.lock, and fetched on a miss. `make models` runs either way:
+      # it checks the SHA-256 of what the cache gave back, and fetches what is missing.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: models
+          key: ner-models-${{ hashFiles('models.lock') }}
+
+      - name: NER model files
+        run: make models
+
+      # ruff, mypy, the tests with the coverage of the library, and 200 samples of the
+      # benchmark against its thresholds. No test of the NER can be skipped here: with CI
+      # set, a test that does not find the model files fails.
+      - name: Lint, typecheck, test, benchmark smoke run
+        run: make check
+
+      # The adapter for Presidio against Presidio itself, in the environment of its own lock.
+      - name: The adapter for Presidio
+        run: make test-presidio
+
+      # What a release is made of: the wheel and the source distribution, each installed
+      # where nothing else is, and the README's quickstart run there as it is written.
+      - name: Build, install cleanly, run the quickstart
+        run: make build acceptance PYTHON=${{ matrix.python }}
+
+      - name: Audit dependencies
+        if: matrix.python == '3.12'
+        run: make deps-audit

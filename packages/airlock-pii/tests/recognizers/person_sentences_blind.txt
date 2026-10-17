@@ -1,0 +1,93 @@
+# Fifty sentences written after the rules were finished, to try them on text that they were
+# not shaped by.
+#
+# The other file, person_sentences.txt, was written first, and the rules were worked on until
+# they agreed with it. It shows what the rules are meant to do, and it cannot show how they do
+# elsewhere. These sentences can, a little. They were run once, on 2026-10-06:
+#
+#   rules only       38 of 42 names found, each with its exact span; 2 spans that are no name
+#   rules and NER    41 of 42 names found; 4 spans that are no name; and twice two names with
+#                    "пен" or "мен" between them reported as one
+#
+# The last of these was a mistake in how a span of the model is cut into names, and it was
+# corrected: a word in lower case now ends a name there, as it does for the rules. With that,
+# the NER run gives 40 of 42, each with its exact span, and the same 4 spans that are no
+# name. Nothing else in the library or in its word lists was changed for these sentences: not
+# the misses ("Ли", "Мейрамбек", a surname alone at the start of a sentence, "Арман" at the
+# start of one), and not the false reports ("Толе", a street; the name a theatre carries;
+# "Жаңа Тариф" and "Халық Банкі", which only the NER reports).
+#
+# The counts as they are now are in test_names_in_sentences.py, and a change that moves them,
+# either way, shows there. Do not tune the rules to these sentences: once they are tuned to,
+# they say nothing more. Add new ones instead.
+#
+# 2026-10-08, names, round 2: one more span that is no name, 3 with the rules and 5 with the
+# NER. A given name that is also a word is now a person at the start of a sentence as well,
+# when a capitalized word of which nothing is known stands next to it ("Мақсат Сейтқали
+# жазды" left in clear before). "Алтын Орда базары", a market, opens a sentence with "Алтын",
+# which is such a name, and "Орда" is on no list. The same two words were reported in the
+# middle of a sentence before this change; now they are reported here too. Neither word was
+# put on a list for it: that is the price of the rule, and this file is where it shows.
+# The names found did not move: 38 and 40 of 42.
+#
+# 2026-10-12: one name was replaced, in "Вопрос к ... по поводу отпуска". The given name and
+# the patronymic that stood there are those of a well-known person, and every name in these
+# files is made up. The new one has the same shape, a given name in a Russian case with a
+# Kazakh patronymic. It was chosen before it was tried, and it is found as the old one was,
+# by the rules and with the NER: no count moved.
+#
+# One sentence per line:   language | text
+# [[name]] marks every name of a person, whether or not it is found. A Kazakh case suffix
+# stays outside the brackets. Every name is made up: common given names put together with
+# common surnames, and no one in particular.
+
+ru | Добрый день, коллеги! Сегодня у [[Ерболата Нурмагамбетова]] день рождения.
+ru | [[Оля]], скинь, пожалуйста, скан паспорта [[Жанны Сергеевны]].
+ru | Руководитель проекта [[Ким Станислав Игоревич]] согласовал бюджет.
+ru | Заявку отклонил [[Бекжан]], спроси у него причину.
+ru | Привет! Передай [[Сауле]], что документы у [[Тимура]].
+ru | Сегодня дежурит [[Пак Олеся]].
+ru | Вопрос к [[Данияру Маратұлы]] по поводу отпуска.
+ru | Поздравляем [[Зарину]] с повышением!
+ru | Отправил письмо [[Бахытжану Сериковичу]], жду ответ.
+ru | Встреча с господином [[Ли]] перенесена на среду.
+ru | Счёт выставлен на [[Ахметову А.К.]], оплата до пятницы.
+ru | Согласовано с [[Виктором Петровичем]].
+ru | Новый сотрудник отдела — [[Даурен Сейткали]].
+ru | Клиент представился как [[Рустем]], фамилию не назвал.
+ru | [[Иванова]] подала жалобу на оператора.
+ru | Мне звонил какой-то [[Ержан]] из отдела взыскания.
+ru | Бухгалтерия: [[Смагулова Алия]], внутренний 301.
+ru | [[Надежда Константиновна]] просила перезвонить.
+ru | На линии был [[Марк]], просил отменить заявку.
+ru | Отчёт по филиалу в Актобе подготовит [[Гульмира]].
+ru | [[Регина Ильдаровна]], подскажите номер договора.
+ru | В отделении на Толе би обслуживают до 18:00.
+ru | Срок действия Соглашения — один год.
+ru | Банк Развития Казахстана одобрил заявку.
+ru | Мир и Visa принимаются к оплате.
+ru | Первомайский проспект перекрыт до вечера.
+ru | Заявка от Самрук-Казына принята в работу.
+kk | Құрметті [[Сәуле Қайратқызы]], сізге хат жолдап отырмыз.
+kk | [[Асхат]] пен [[Дина]] ертең демалыста болады.
+kk | Жауапты қызметкер: [[Тоқтарова Г.М.]]
+kk | Байланыс тұлғасы — [[Мейрамбек]], ішкі телефоны 245.
+kk | Шот иесі: [[Қуанышбаева Ақмарал Төлегенқызы]].
+kk | [[Медет]], сәлем! Кешегі есепті жіберші.
+kk | [[Арайлым]] демалыста, оның орнында [[Гүлназ]] істейді.
+kk | Қарыз алушының әкесі [[Серікбай Жұмабекұлы]] кепіл болды.
+kk | Жаңа жылмен, [[Айжан]] апай!
+kk | Тапсырысты [[Нұрболат]] қабылдады.
+kk | [[Арман]] мен [[Берік]] келісімге қол қойды.
+kk | Сіздің менеджеріңіз — [[Әлихан Бөкейхан]].
+kk | [[Қайрат]] мырза, сіздің өтінішіңіз қабылданды.
+kk | Мұхтар Әуезов атындағы театр жанындағы бөлімше жабық.
+kk | Жолдас, бұл мәселені ертең шешеміз.
+kk | Жаңа Тариф туралы ақпарат сайтта.
+kk | Халық Банкі бөлімшесі бүгін жабық.
+kk | Kaspi Gold картасы бұғатталды.
+kk | Алтын Орда базары жанында кездесейік.
+kk | Желтоқсан көшесіндегі кеңсе жабық.
+en | Pls ask [[Dinara Sagintayeva]] to resend the invoice.
+en | Our contact at the bank is Mr. [[Yerlan Abdrakhmanov]].
+en | Passport was issued to [[SADYKOVA MADINA]].

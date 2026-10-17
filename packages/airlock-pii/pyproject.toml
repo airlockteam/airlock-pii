@@ -1,0 +1,73 @@
+[project]
+name = "airlock-pii"
+version = "0.1.0rc1"
+description = "Detects Kazakhstan personal data (IIN/BIN, IBAN, cards, phones, emails, names) and secrets in text."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.11"
+keywords = ["pii", "kazakhstan", "iin", "bin", "iban", "names", "secrets", "privacy", "redaction"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language :: Russian",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Security",
+    "Topic :: Text Processing :: Linguistic",
+    "Typing :: Typed",
+]
+# The core is pure Python with no runtime dependencies. Everything else is an extra.
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/airlockteam/airlock-pii"
+Issues = "https://github.com/airlockteam/airlock-pii/issues"
+Changelog = "https://github.com/airlockteam/airlock-pii/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+# Russian NER for names (airlock_pii.recognizers.common.ner_ru). The three natasha packages are
+# pinned exactly: they have had no release since 2023, and the loader reads the model files
+# through their internals. slovnet runs the model, navec is the format of its embeddings and
+# razdel the tokenizer its positions are counted in. numpy is all they need; the bound is the
+# oldest version tried, and there is no upper one: a library that pins numpy cannot be
+# installed next to anything else that uses it.
+ner-ru = [
+    "slovnet==0.6.0",
+    "navec==0.10.0",
+    "razdel==0.5.0",
+    "numpy>=1.26",
+]
+# The recognizers as recognizers of Presidio (airlock_pii.presidio_adapter). The bound is the
+# version the adapter is tested with, in a project of its own: tests_presidio/, with its own
+# lock. The lock that the library is tested and shipped from leaves this package out
+# (`exclude-dependencies` at the root of the workspace), because presidio-analyzer 2.2.364
+# asks for numpy<2.5 and would take the numpy of everything else down with it.
+presidio = [
+    "presidio-analyzer>=2.2.364",
+]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/airlock_pii"]
+
+# The source distribution is what the wheel is built from, and the files a reader of the
+# package page is pointed to. The tests stay in the repository: they read files of it that no
+# distribution holds (the lock of the model files at its root, the two locks of the benchmark).
+[tool.hatch.build.targets.sdist]
+only-include = ["src", "README.md", "LICENSE", "NOTICE", "pyproject.toml"]
+
+# The library supports Python 3.11, one version below the workspace, so lint it for 3.11.
+[tool.ruff]
+extend = "../../pyproject.toml"
+target-version = "py311"
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"litellm".msg = "No LiteLLM: its PyPI package was compromised in March 2026."

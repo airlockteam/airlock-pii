@@ -1,0 +1,57 @@
+# How Kazakh and Russian names are written in Latin letters. Unverified: an approximation of
+# common practice, not a standard. See README.md in this folder.
+#
+# One Cyrillic letter per line with the ways it is written, the most common first. The list
+# joins what passports of Kazakhstan have used (kh, zh, ye after a vowel, ss between vowels)
+# with the official Kazakh Latin alphabet of 2021 written without its diacritics (q, j, i).
+# Every given name of the lists is spelled in all these ways when the lists are read.
+#
+# Four more rules are in the code, because they depend on the letters around:
+# - "е" is also "ye" at the start of a word and after a vowel, "ъ" or "ь";
+# - "с" between two vowels is also "ss";
+# - "ий" at the end of a word is also "y";
+# - "ия" at the end of a word is also "ia".
+
+[letters]
+а = a
+ә = a
+б = b
+в = v
+г = g
+ғ = g, gh
+д = d
+е = e
+ё = yo, e
+ж = zh, j
+з = z
+и = i
+й = i, y
+к = k
+қ = k, q
+л = l
+м = m
+н = n
+ң = n, ng
+о = o
+ө = o
+п = p
+р = r
+с = s
+т = t
+у = u
+ұ = u
+ү = u
+ф = f
+х = kh, h
+һ = h
+ц = ts
+ч = ch
+ш = sh
+щ = shch
+ъ =
+ы = y
+і = i
+ь =
+э = e
+ю = yu, iu
+я = ya, ia

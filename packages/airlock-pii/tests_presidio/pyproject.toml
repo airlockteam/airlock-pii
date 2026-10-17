@@ -1,0 +1,58 @@
+# The environment in which the adapter for Presidio is tested (airlock_pii.presidio_adapter),
+# and where the extra `airlock-pii[presidio]` is locked.
+#
+# A project of its own, with a lock of its own next to this file, and no member of the
+# workspace. presidio-analyzer 2.2.364 asks for numpy<2.5 and brings spaCy and some thirty
+# packages with it; in the lock that the library is tested and shipped from, numpy would go
+# down for everything. So that lock leaves Presidio out, and this one holds what a user of
+# the extra gets: the library with both of its extras, Presidio, and the tools to test them.
+# numpy is below 2.5 here, which is why the tests of the Russian NER run here a second time.
+#
+# No language model of spaCy is installed: the tests build Presidio's analyzer with its
+# NoOpNlpEngine, which loads none.
+#
+#   make test-presidio
+
+[project]
+name = "airlock-pii-presidio-tests"
+version = "0"
+description = "Environment for the tests of airlock-pii's adapter for Presidio."
+requires-python = ">=3.11"
+dependencies = [
+    "airlock-pii[presidio,ner-ru]",
+    "pytest>=9.1",
+    "pytest-cov>=7.1",
+    "hypothesis>=6.168",
+    "mypy>=2.4",
+]
+
+[tool.uv]
+# Nothing here is a package to build: the project is its dependencies.
+package = false
+
+[tool.uv.sources]
+airlock-pii = { path = "..", editable = true }
+
+# pytest is started with `-c` and this file, from the root of the repository, so that the
+# configuration of the root (and its plugins, which are not installed here) is not read.
+[tool.pytest.ini_options]
+minversion = "9.0"
+addopts = ["--import-mode=importlib", "--strict-markers", "--strict-config", "-m", "not slow"]
+xfail_strict = true
+markers = [
+    "slow: performance tests, not run in CI",
+    "ner: needs the ner-ru extra and the model files of make models; never skipped in CI",
+]
+
+[tool.coverage.run]
+branch = true
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+
+# The natasha packages ship no type information. Presidio ships its own.
+[[tool.mypy.overrides]]
+module = ["slovnet.*", "navec.*", "razdel.*"]
+ignore_missing_imports = true

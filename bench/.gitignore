@@ -1,0 +1,4 @@
+# What the CI-sized run writes. The results of the full run, in results/, are kept.
+results/smoke/
+# What review.py writes for a reader: text of the data, with synthetic names in it.
+results/review/

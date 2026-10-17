@@ -1,0 +1,167 @@
+# Cities, regions and countries that business text in Kazakhstan names. Unverified: written
+# from general knowledge. See README.md in this folder.
+#
+# A word of this list is a place and never a person, in its base form, in a Russian case
+# form or with a Kazakh case suffix ("Астаны", "Алматыға"). A place that is also a common
+# given name or surname is not listed: "Абай", "Сәтбаев" and "Қонаев" are a town and people.
+# For those the word next to them decides ("Абай қаласы", "город Сатпаев").
+#
+# [like-a-surname] is of another kind: towns whose names end like a surname, many of them
+# named after a person. Such a word is still a surname next to a given name, initials or a
+# word for a person ("Анна Ростова", "клиент Чехов"). Standing alone in the middle of a
+# sentence it is the town, and the rule that takes a surname alone for a person leaves it
+# ("летим в Ростов", "из Пушкина", "в Кемерове"). A town in -ово, -ево or -ино is listed for
+# its other cases, which look like those of a surname.
+
+[kz]
+Алматы
+Алма-Ата
+Астана
+Нұр-Сұлтан, Нур-Султан
+Шымкент
+Қарағанды, Караганда
+Ақтөбе, Актобе
+Тараз
+Павлодар
+Өскемен, Усть-Каменогорск
+Семей
+Атырау
+Қостанай, Костанай
+Қызылорда, Кызылорда
+Орал, Уральск
+Петропавл, Петропавловск
+Ақтау, Актау
+Теміртау, Темиртау
+Түркістан, Туркестан
+Көкшетау, Кокшетау
+Талдықорған, Талдыкорган
+Екібастұз, Экибастуз
+Рудный
+Жезқазған, Жезказган
+Балқаш, Балхаш
+Кентау
+Жаңаөзен, Жанаозен
+Степногорск
+Қапшағай, Капшагай
+Байқоңыр, Байконур
+Арқалық, Аркалык
+Риддер
+Щучинск
+Сарыағаш, Сарыагаш
+Қаскелең, Каскелен
+Есік, Есик
+Жетісу, Жетысу
+Маңғыстау, Мангистау
+Ұлытау, Улытау
+Қазақстан, Казахстан
+
+[other]
+Москва
+Санкт-Петербург
+Новосибирск
+Екатеринбург
+Казань
+Омск
+Ташкент
+Самарканд
+Бишкек
+Душанбе
+Ашхабад
+Баку
+Тбилиси
+Ереван
+Минск
+Киев
+Стамбул
+Анкара
+Дубай
+Пекин
+Лондон
+Берлин
+Париж
+Россия
+Ресей
+Узбекистан
+Өзбекстан
+Кыргызстан
+Қырғызстан
+Китай
+Қытай
+Турция
+Түркия
+Германия
+Украина
+Молдова
+Аргентина
+Палестина
+Герцеговина
+Бенин
+Нидерланды, Нидерландов
+Филиппины, Филиппин
+Багамы, Багамов
+Афины, Афин
+Дублин
+Турин
+Харбин
+
+[latin]
+Almaty
+Astana
+Shymkent
+Karaganda
+Karagandy
+Aktobe
+Taraz
+Pavlodar
+Semey
+Atyrau
+Kostanay
+Kyzylorda
+Aktau
+Turkistan
+Kokshetau
+Kazakhstan
+Moscow
+Tashkent
+Bishkek
+London
+Berlin
+Geneva
+# These end as Kazakh names do in Latin letters (name_endings.txt, [given-kk-latin]):
+# next to a given name they would be taken for its surname.
+Dubai
+Mumbai
+Bombay
+Astrakhan
+Kigali
+Burabai
+Burabay
+
+[like-a-surname]
+Ростов
+Саратов
+Тамбов
+Псков
+Азов
+Серпухов
+Чехов
+Киров
+Ржев
+Королёв
+Пушкин
+Камышин
+Харьков
+Львов
+Чернигов
+Николаев
+Кишинёв
+Могилёв
+Курчатов
+Сатпаев, Сәтбаев
+Конаев, Қонаев
+Кемерово
+Иваново
+Домодедово
+Шереметьево
+Внуково
+Сколково

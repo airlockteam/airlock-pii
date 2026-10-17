@@ -1,0 +1,176 @@
+# Given names that are also ordinary words. Unverified, and the list most in need of a native
+# speaker's eye: every name here is found less often, and every name missing here is found
+# where it is only a word. See README.md in this folder.
+#
+# A name of this list, standing alone, counts as a person only where something else says so:
+# a greeting or an honorific next to it, or, in Cyrillic text, a capital letter in the middle
+# of a sentence. At the start of a sentence, where every word has a capital, it is left
+# alone: "Мақсат айқын." is about a goal. Together with a surname, a patronymic or initials
+# it is a name like any other. And at the start of a Cyrillic sentence it is one next to a
+# capitalized word of which nothing is known: "Мақсат Сейтқали жазды", where the surname is
+# an ancestor's name and has no ending. A word of not_names.txt or of places.txt is not such
+# a word: "Мақсат Банк ашты".
+#
+# One name per line, spelled as in the lists of given names; what the word means follows "#".
+#
+# [calendar] holds the names of weekdays and months. They are names that are also words, and
+# are held to a stricter rule: a capital letter in the middle of a sentence is not enough,
+# because the days, the months and the spring holiday are written with one. Such a name
+# alone is a person only next to a greeting or an honorific, and never when a word of
+# [day-or-month] in context_words.txt follows it ("Жұма күні", "Наурыз мейрамымен", "Жұма
+# күнгі жиналыс").
+
+[kk]
+Ажар        # looks, complexion
+Азамат      # citizen
+Азат        # free
+Айдын       # expanse of water; bright
+Айқын       # clear
+Айым        # my moon; a way to address a woman
+Алма        # apple
+Алмас       # diamond
+Алтай       # the Altai
+Алтын       # gold
+Анар        # pomegranate
+Арай        # dawn light
+Ардақ       # honour
+Арлан       # male wolf
+Арман       # dream
+Арслан      # lion
+Ару         # a beauty
+Арыстан     # lion
+Асан        # healthy, well
+Асқар       # lofty
+Асыл        # precious
+Аян         # evident, known
+Аяулым      # my dear
+Әдемі       # beautiful
+Әділ        # just
+Әділет      # justice
+Әсем        # graceful
+Әсия        # in Latin letters: Asia, the continent
+Бақыт       # happiness
+Батыр       # hero
+Бейбіт      # peaceful
+Берік       # firm, sound
+Болат       # steel
+Гауһар      # gem
+Гүлім       # my flower
+Ғалым       # scientist
+Дана        # wise; a copy, a piece
+Дария       # river
+Дархан      # generous
+Дастан      # epic poem
+Дәулет      # wealth
+Дидар       # face, meeting
+Досым       # my friend
+Еркін       # free
+Ермек       # pastime
+Ерік        # will
+Есен        # safe and sound
+Жақсылық    # a good deed
+Жалғас      # continuation
+Жарас       # be fitting
+Жарқын      # bright
+Жеңіс       # victory
+Жомарт      # generous
+Жұлдыз      # star
+Жібек       # silk
+Заңғар      # towering
+Инабат      # modesty
+Ислам       # Islam
+Күміс       # silver
+Қайрат      # energy, effort
+Қайсар      # stubborn
+Қанат       # wing
+Қарақат     # currant
+Қуаныш      # joy
+Қуат        # power
+Қымбат      # expensive, dear
+Ләззат      # pleasure
+Мақсат      # goal, purpose
+Марал       # deer
+Маржан      # coral
+Мәлік       # king
+Медет       # support
+Мейрам      # holiday
+Меруерт     # pearl
+Мирас       # heritage
+Мөлдір      # clear, transparent
+Мұрат       # aim
+Мұхит       # ocean
+Өркен       # sprout, offspring
+Рамазан     # the month of Ramadan
+Раушан      # rose
+Рахат       # bliss
+Рахым       # mercy
+Сабыр       # patience
+Садық       # loyal, faithful
+Сағындық    # we missed (someone)
+Сағыныш     # longing
+Салтанат    # ceremony, splendour
+Самал       # breeze
+Сандуғаш    # nightingale
+Сапар       # journey
+Сара        # clear, straight; its Russian genitive reads like the Kazakh word for yellow
+Сәуле       # ray
+Сұлтан      # sultan
+Сымбат      # figure, grace
+Талант      # talent
+Темір       # iron
+Тоқтар      # will stop
+Толқын      # wave
+Төлеген     # who has paid
+Төлеу       # to pay
+Тұрар       # will stand
+Тұрсын      # let it stand
+Ұлан        # young man, guardsman
+Үміт        # hope
+Шолпан      # the planet Venus
+Шұға        # broadcloth
+Шынар       # plane tree
+Шырын       # juice, sweet
+Ықылас      # goodwill
+Іңкәр       # longing
+
+[ru]
+Вера        # faith
+Венера      # the planet Venus
+Виктория    # victory; in Latin letters a place name
+Влад        # in Latin letters part of other words
+Герман      # in Latin letters: German
+Диана       # in Latin letters part of names of things
+Ева         # in Latin letters: eve
+Лев         # lion
+Лена        # the river Lena
+Лилия       # lily
+Любовь      # love
+Макс        # in Latin letters: max
+Марк        # "марка" is a brand, and in Latin letters: mark
+Надежда     # hope
+Назар       # in Kazakh: attention, as in the set phrase for "please note"
+Регина      # in Latin letters a place name
+Рита        # in Latin letters part of other words
+Рома        # in Latin letters: Roma
+Роман       # novel; in Latin letters: Roman
+Роза        # rose
+Света       # "света" is a form of the word for light
+Слава       # glory
+София       # the city of Sofia
+Тёма        # "тема" is a topic
+Яна         # in Latin letters part of other words
+
+# Weekdays and months that are also given names. See the note at the top of this file.
+[calendar]
+Дүйсенбі    # Monday
+Сейсенбі    # Tuesday
+Сәрсенбі    # Wednesday
+Бейсенбі    # Thursday
+Жұма        # Friday
+Сенбі       # Saturday
+Жексенбі    # Sunday
+Қаңтар      # January
+Ақпан       # February
+Наурыз      # March; the spring holiday
+Мамыр       # May
+Маусым      # June

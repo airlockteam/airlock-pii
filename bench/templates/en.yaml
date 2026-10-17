@@ -1,0 +1,195 @@
+# Benchmark templates in English: original business text, written for this benchmark.
+#
+# English as it is written in banks and companies in Kazakhstan: IIN and BIN, amounts in KZT,
+# names in Latin letters. The slots and the rules are those of ru.yaml. English has no cases
+# to tag, so a PERSON slot never carries one here.
+
+lang: en
+
+templates:
+  loan:
+    - >-
+      The credit committee approved the application: borrower {PERSON}, IIN {IIN}, amount
+      KZT {amount} for 36 months.
+    - >-
+      Please prepare a decision on application No. {order_no}. The client is {PERSON},
+      IIN {IIN}; the co-borrower is {PERSON}, IIN {IIN}.
+    - >-
+      Mortgage application dated {date}: {PERSON}, {IIN}, phone {PHONE}. Down payment
+      KZT {amount}; the property is an apartment in Astana.
+    - >-
+      The underwriter asked {PERSON} for a six-month income statement and a statement
+      for account {KZ_IBAN}.
+    - >-
+      Decision {doc_no}: raise the limit on credit card {CARD} to KZT {amount}.
+      Cardholder: {PERSON}.
+    - >-
+      SME loan: the borrower is Arna Sauda Group LLP, BIN {BIN}; the guarantor is its director,
+      {PERSON}, IIN {IIN}.
+    - >-
+      The client applied through the mobile app and left a contact number, {PHONE},
+      and an e-mail address, {EMAIL}.
+    - >-
+      Early repayment: KZT {amount} was debited from card {CARD} and the loan under agreement
+      {doc_no} is closed. The clearance letter went to {EMAIL}.
+
+  transfer:
+    - >-
+      Please transfer KZT {amount} to account {KZ_IBAN}. Beneficiary: {PERSON}.
+      Purpose of payment: loan repayment.
+    - >-
+      The transfer did not arrive: sender {PERSON}, card {CARD}, amount KZT {amount},
+      transaction date {date}.
+    - >-
+      Payment details: Shanyrak Komplekt LLP, BIN {BIN}, IBAN {KZ_IBAN}.
+      Invoice No. {order_no} dated {date}.
+    - >-
+      Salary payment for {PERSON}, IIN {IIN}: KZT {amount} to account {KZ_IBAN}.
+    - >-
+      The international transfer was rejected by compliance. Sender: {PERSON}, IIN {IIN}.
+      Reason: no underlying contract was provided.
+    - >-
+      A transfer by phone number {PHONE} is stuck in processing. Amount: KZT {amount}.
+      The app shows the recipient as {PERSON}.
+    - >-
+      Refund for receipt No. {order_no}: the money will return to card {CARD} within five
+      business days. A notice was sent to {EMAIL}.
+    - >-
+      Please recall the payment of KZT {amount} made on {date}: the beneficiary's BIN was
+      wrong. The correct one is {BIN}.
+
+  insurance:
+    - >-
+      Claim No. {order_no}: policyholder {PERSON}, IIN {IIN}, road accident on {date},
+      claimed damage KZT {amount}.
+    - >-
+      The payout is approved. Transfer KZT {amount} to account {KZ_IBAN}; the payee
+      is {PERSON}.
+    - >-
+      Please send the missing claim documents, a copy of the vehicle registration and
+      a statement signed by {PERSON}, to {EMAIL}.
+    - >-
+      Motor policy {doc_no} was issued to {PERSON}, IIN {IIN}. The premium of KZT {amount}
+      was paid with card {CARD}.
+    - >-
+      The beneficiary under the life insurance contract is {PERSON}, {IIN}.
+      Contact phone: {PHONE}.
+    - >-
+      The adjuster will inspect the car tomorrow. Owner: {PERSON}, {PHONE}.
+      Inspection address: 90 Satpayev Street.
+    - >-
+      Group medical insurance: the policyholder is Daneker Pharm Import LLP, BIN {BIN},
+      with 124 insured employees and a premium of KZT {amount}.
+    - >-
+      Flooded apartment: policyholder {PERSON}, {PHONE}, {EMAIL}. Damage to the finishing
+      is estimated at KZT {amount}.
+
+  hr:
+    - >-
+      Order {doc_no}: {PERSON} joins the risk department as a lead specialist from {date},
+      with a monthly salary of KZT {amount}.
+    - >-
+      Dear colleagues, our new analyst, {PERSON}, starts on Monday. Work e-mail: {EMAIL}.
+    - >-
+      To issue an access badge we need the employee's details: {PERSON}, IIN {IIN},
+      mobile {PHONE}.
+    - >-
+      Leave request: {PERSON} asks for 14 calendar days of annual leave starting {date}.
+    - >-
+      This is to certify that {PERSON}, IIN {IIN}, has worked for the company as chief
+      accountant since {date}.
+    - >-
+      Payroll: employee {PERSON}, salary account {KZ_IBAN}, card {CARD}.
+    - >-
+      Candidate for the system administrator vacancy: {PERSON}, {PHONE}, {EMAIL}.
+      The interview is on Thursday at 15:00.
+    - |-
+      Employee form
+      Full name: {PERSON}
+      IIN: {IIN}
+      Phone: {PHONE}
+      E-mail: {EMAIL}
+      Bank account: {KZ_IBAN}
+    # A name that opens a sentence, with no word for a person next to it: where a capital
+    # letter says nothing, and a surname without an ending says nothing either.
+    - >-
+      {PERSON} joins the risk team on Monday. Please create a mailbox, {EMAIL}, and order
+      a pass.
+
+  contract:
+    - >-
+      Bereket Engineering Service LLP, BIN {BIN}, represented by its director {PERSON} acting
+      under the Charter, hereinafter the Contractor.
+    - >-
+      Details of the parties. Customer: Caspian Oil Supply JSC, BIN {BIN}, IBAN {KZ_IBAN}.
+      Contractor: a sole proprietor, IIN {IIN}.
+    - >-
+      Lease agreement {doc_no} dated {date}. Lessor: {PERSON}, IIN {IIN}. The rent is
+      KZT {amount} per month.
+    - >-
+      Payment under this Agreement is made to the Supplier's account {KZ_IBAN} within five
+      banking days of signing the acceptance certificate.
+    - >-
+      Notices under the contract are sent to {EMAIL} and by phone to {PHONE}.
+    - >-
+      The power of attorney is issued to {PERSON}, IIN {IIN}, to represent
+      Merey Trans Cargo LLP before the tax authorities.
+    - >-
+      Loan agreement between individuals: lender {PERSON}, IIN {IIN}; borrower {PERSON},
+      IIN {IIN}; principal KZT {amount}.
+    - >-
+      The services agreement is signed with a self-employed contractor: {PERSON}, {IIN}.
+      The fee is paid to card {CARD}.
+
+  call_centre:
+    - >-
+      Call on {date}. The client, {PERSON}, complains about a double charge and asks
+      for a call back on {PHONE} after 18:00.
+    - >-
+      The client cannot log in to the app; the SMS code does not arrive. Number on file:
+      {PHONE}, IIN {IIN}.
+    - >-
+      Ticket {order_no}: the client asks to unblock card {CARD}. Identity was confirmed
+      with the code word.
+    - >-
+      Call back: {PHONE}. Question about early repayment. Client: {PERSON}.
+    - >-
+      The client dictated the IIN {IIN} and asked us to send the repayment schedule
+      to {EMAIL}.
+    - >-
+      The client wants to change the phone number in the profile: old {PHONE}, new {PHONE}.
+    - >-
+      Incoming call about a lost card. Card {CARD} was blocked at the request of its holder,
+      {PERSON}.
+    - >-
+      The caller asks why the transfer to account {KZ_IBAN} has not arrived.
+      Sender: Tumar Market Plus LLP, payment dated {date}.
+    # A name that opens a sentence, with no word for a person next to it: where a capital
+    # letter says nothing, and a surname without an ending says nothing either.
+    - >-
+      Call logged at 10:40. {PERSON} asked for a callback on {PHONE} about a blocked card,
+      {CARD}.
+
+  it_incident:
+    - >-
+      Incident INC-{order_no}: a GitHub token, {SECRET:github_token}, was pushed to a public
+      repository. It has been revoked and the pipelines were restarted.
+    - >-
+      The payment service logs the Authorization header in clear:
+      Bearer {SECRET:bearer_token}. Mask the output and reissue the token.
+    - >-
+      The on-call engineer, {PERSON}, found a connection string in the staging config:
+      {SECRET:connection_string}. The password was rotated.
+    - >-
+      A contractor posted AWS keys in a shared chat:
+      AWS_ACCESS_KEY_ID={SECRET:aws_access_key_id} and
+      AWS_SECRET_ACCESS_KEY={SECRET:aws_secret_access_key}. Both are deactivated.
+    - >-
+      A user pasted a VPN password into the ticket: password={SECRET:password}.
+      The account was reset.
+    - >-
+      The .env file committed to feature/chat-bot contains
+      ANTHROPIC_API_KEY={SECRET:anthropic_api_key}. Commit {git_sha} was removed from history.
+    - >-
+      PII in logs: the scoring service writes client IINs, for example {IIN}.
+      Owner of the fix: {PERSON}, {EMAIL}.

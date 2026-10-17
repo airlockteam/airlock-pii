@@ -1,0 +1,28 @@
+name: Word list or Kazakh text
+description: A name that is missing, a word that is on the wrong list, a template that reads wrong
+labels: ["word-lists"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The word lists and the Kazakh templates have not been checked by a native speaker.
+        Corrections are very welcome, with no code at all. Names here are common given names
+        and surnames; please do not use the full name of a particular person.
+  - type: textarea
+    id: what
+    attributes:
+      label: What is wrong or missing
+      description: The word or the sentence, the file if you know it, and how it should be.
+    validations:
+      required: true
+  - type: dropdown
+    id: speaker
+    attributes:
+      label: Kazakh is
+      options:
+        - my first language
+        - a language I speak well
+        - a language I am learning, or checked with a dictionary
+        - not involved (the correction is about Russian or English)
+    validations:
+      required: true

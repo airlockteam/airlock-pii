@@ -1,0 +1,130 @@
+# Benchmark templates in Kazakh written in Latin letters: original business text, written for
+# this benchmark.
+#
+# This is Kazakh as people type it on a keyboard without the Kazakh letters, in chats and in
+# short notes: "Salem! Menin JSN ..." No alphabet is followed strictly, because none is in
+# practice: "sh" and "zh" stand next to "j", and the letters that only Kazakh has are typed as
+# the nearest Latin one. The words for the values are the ones such a text uses: JSN and ZhSN
+# (ЖСН), BSN (БСН), IIN, BIN, IBAN, shot, karta, telefon, pochta. The word for a password is
+# the English one: "parol" and "kupiasoz" are words that airlock_pii does not know yet, and a
+# secret is checked against a threshold.
+#
+# Unverified, like every Kazakh text here: no one who speaks Kazakh as a first language has
+# read it. The slots and the rules are those of ru.yaml. The names are written in Latin
+# letters, in their base form. The samples have the language kk and the script latn.
+
+lang: kk
+script: latn
+
+templates:
+  loan:
+    - >-
+      Nesie komiteti otinimdi makuldady: karyz alushy {PERSON}, JSN {IIN}, somasy {amount} tenge,
+      merzimi 36 ai.
+    - >-
+      Kaiyrly kun! Klient {PERSON} tutynushylyk nesiege otinim berdi. Bailanys telefony: {PHONE},
+      elektrondyk poshtasy: {EMAIL}.
+    - >-
+      Ipotekalyk otinim № {order_no}: karyz alushy {PERSON}, ZhSN {IIN}; ten karyz alushy {PERSON},
+      ZhSN {IIN}. Bastapky zharna {amount} tenge.
+    - >-
+      Nesie kartasynyn limitin {amount} tengege deiin koteru turaly sheshim kabyldandy. Karta
+      nomiri: {CARD}, iesi — {PERSON}.
+    - >-
+      Shagyn bizneske arnalgan nesie: karyz alushy «Ak Zhaiyk Kurylys Servis» LLP, BSN {BIN},
+      kepilger — direktor {PERSON}.
+
+  transfer:
+    - >-
+      Salem! {KZ_IBAN} shotyna {amount} tenge audaru kerek, alushy — {PERSON}, JSN {IIN}.
+    - >-
+      Audarym otpei zhatyr: zhiberushinin kartasy {CARD}, alushynyn telefony {PHONE}. Somasy
+      {amount} tenge.
+    - >-
+      {PERSON} keshe kate shotka aksha audaryp zhibergen. Durys shot: {KZ_IBAN}, kaitaru turaly
+      otinish zhazyldy.
+    - >-
+      Tolem tapsyrmasy № {order_no}: toleushi «Tumar Market Plus» LLP, BIN {BIN}, IBAN {KZ_IBAN};
+      somasy {amount} tenge.
+    - >-
+      Aksha tuspedi. Menin nomirim {PHONE}, pochtam {EMAIL}, tolem {date} kuni zhasalgan.
+
+  insurance:
+    - >-
+      Saktandyru shartyn rasimdeu ushin: saktanushy {PERSON}, JSN {IIN}, telefony {PHONE}.
+    - >-
+      Otinish boiynsha tolem: zhabirlenushi {PERSON}, aksha {KZ_IBAN} shotyna audarylsyn. Zalal
+      {amount} tengege bagalandy.
+    - >-
+      Polis iesi {PERSON} bailanys derekterin zhanartty: zhana nomiri {PHONE}, pochtasy {EMAIL}.
+    - >-
+      Saktandyru tolemi karta arkyly kaitarylady: {CARD}. Otinish berushi — {PERSON}, otinish nomiri
+      {order_no}.
+    - >-
+      Korporativtik saktandyru: saktanushy «Zerek Soft Lab» LLP, BSN {BIN}, zhauapty tulga —
+      {PERSON}, {EMAIL}.
+
+  hr:
+    - |-
+      Kyzmetker saualnamasy
+      Aty-zhoni: {PERSON}
+      JSN: {IIN}
+      Telefon: {PHONE}
+      E-mail: {EMAIL}
+      Shot: {KZ_IBAN}
+    - >-
+      {PERSON} {date} kuninen bastap zhumyska kabyldandy. Zhalakysy {KZ_IBAN} shotyna audarylady,
+      JSN {IIN}.
+    - >-
+      Enbek demalysy turaly buiryk: {PERSON}, {date} men {date} aralygy. Bailanys ushin: {PHONE}.
+    - >-
+      Issapar shygyndary {CARD} kartasyna kaitarylsyn. Kyzmetker — {PERSON}, somasy {amount} tenge.
+    - >-
+      Zhana kyzmetker {PERSON} ushin korporativtik pochta ashyldy: {EMAIL}. Ruksat erten beriledi.
+
+  contract:
+    - >-
+      Zhetkizu sharty № {doc_no}: zhetkizushi «Orda Riteil Sistem» LLP, BIN {BIN}, IBAN {KZ_IBAN}.
+      Bailanys tulgasy: {PERSON}, tel. {PHONE}.
+    - >-
+      Zhalga beru sharty: zhalga berushi {PERSON}, JSN {IIN}; zhalga alushy {PERSON}, JSN {IIN}. Ai
+      saiyngy tolem {amount} tenge.
+    - >-
+      Shartka kol koigan: {PERSON}. Surak bolsa {EMAIL} pochtasyna zhazynyz nemese {PHONE} nomirine
+      habarlasynyz.
+    - >-
+      Rekvizitter: BSN {BIN}, esepshot {KZ_IBAN}. Shot-faktura {date} kuni zhiberiledi.
+    - >-
+      Kyzmet korsetu sharty boiynsha oryndaushy — ZhK {PERSON}, JSN {IIN}. Tolem {amount} tenge,
+      merzimi 10 kun.
+
+  call_centre:
+    - >-
+      Konyrau sagat 14:20-da tusti. {PERSON} kartasynyn bugattalganyn aitty, karta nomiri {CARD}.
+    - >-
+      Klient {PERSON} kaita konyrau shaludy suraidy: {PHONE}. Maselesi — mobildi kosymshaga kire
+      almaidy.
+    - >-
+      Abonent {KZ_IBAN} shotyna audarymnyn nege tuspegenin suraidy. Tolem {date} kuni zhasalgan.
+    - >-
+      Salem, men {PERSON}. Menin JSN {IIN}, nomirim {PHONE}. Kartam nege bugattaldy?
+    - >-
+      Klient uzindi koshirmelerdi {EMAIL} poshtasyna algysy keledi. Kelisimi zhazylyp alyndy, JSN
+      {IIN}.
+
+  it_incident:
+    - >-
+      Intsident INC-{order_no}: GitLab tokeni {SECRET:gitlab_token} ashyk repozitoriige tusip
+      ketken. Tokennin kushi zhoiyldy.
+    - >-
+      Paidalanushy otinimge VPN kupiasozin zhazyp zhibergen — password: {SECRET:password}. Kupiasoz
+      auystyryldy.
+    - >-
+      Kezekshi inzhener {PERSON} staging konfiguratsiasynan derekkorga kosylu zholyn tapty:
+      {SECRET:connection_string}. Kupiasoz auystyryldy.
+    - >-
+      feature/chat-bot tarmagyna .env faily kommittelgen, ishinde
+      OPENAI_API_KEY={SECRET:openai_api_key} zholy bar. Kilttin kushi zhoiyldy.
+    - >-
+      Monitoring: auth servisi 500 katesin kaitardy. Trassirovkada {SECRET} kilti korinip tur,
+      zhauapty — {PERSON}, {EMAIL}.

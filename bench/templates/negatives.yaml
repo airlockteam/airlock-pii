@@ -1,0 +1,394 @@
+# Negatives: business text with nothing in it to find, and with much that looks as if there were.
+#
+# A negative holds no entity slot. What it holds instead:
+# - {number_12}: twelve digits with a wrong IIN/BIN check digit; {number_12_valid}: twelve digits
+#   with the right one, but neither a birth date nor the structure of a BIN, and no word that
+#   calls them an IIN (synthetic.iin(dated=False));
+# - {number_16}: sixteen digits that fail the Luhn check; {order_no_11}: eleven digits that begin
+#   like a mobile number, numbered as a document: right after a word such as "заказ" or "order",
+#   right after "№" or "#", or, in Kazakh word order, right before "нөмірлі тапсырыс";
+# - order and contract numbers, dates and tenge amounts ({order_no}, {doc_no}, {date}, {amount});
+# - {uuid}, {git_sha}, {timestamp_ms} and the word "password" with nothing secret after it;
+# - streets and avenues named after people, cities, and invented companies after ТОО, ЖШС, АО
+#   and АҚ: what a detector of names must leave alone.
+#
+# No twelve-digit look-alike stands after a word that calls it an IIN or a BIN: a reader would
+# then take it for one, and the text would not be a negative.
+#
+# Companies are invented; streets and cities are real places.
+
+templates:
+  ru:
+    loan:
+      - >-
+        Кредитный комитет рассмотрел заявку № {number_12} от {date}: запрошено {amount} тенге
+        на 48 месяцев, решение перенесено на следующее заседание.
+      - >-
+        С {date} ставка по ипотечной программе не меняется. Первоначальный взнос — от 20%,
+        максимальная сумма для Алматы и Астаны — {amount} тенге.
+      - >-
+        Заявка {number_12_valid} отклонена скорингом: недостаточный стаж на последнем месте
+        работы. Повторная подача возможна через 60 дней.
+      - >-
+        Отделение на улице Байтурсынова, 65 принимает заявки на автокредит с 9:00 до 18:00,
+        в субботу — до 14:00. За {date} принято 37 заявок на сумму {amount} тенге.
+    transfer:
+      - >-
+        Платёжное поручение № {order_no} от {date} на сумму {amount} тенге исполнено,
+        референс операции {number_12_valid}.
+      - >-
+        Комиссия за межбанковский перевод составит 0,2%, минимум 300 тенге. Переводы свыше
+        {amount} тенге подтверждаются звонком из банка.
+      - >-
+        Транзакция {number_16} отклонена эквайером: код ответа 05. Повторите попытку позже
+        или обратитесь в свой банк.
+      - >-
+        Курс на {date}: доллар 478,50, евро 512,30, рубль 5,12. Лимит на обмен без
+        подтверждающих документов — {amount} тенге.
+      - >-
+        Заказ № {order_no_11} оплачен, чек отправлен в приложение. Возврат возможен в течение
+        14 дней.
+    insurance:
+      - >-
+        Убыток № {number_12} зарегистрирован {date}. Осмотр повреждённого автомобиля состоится
+        на СТО по адресу: проспект Райымбека, 212.
+      - >-
+        Тариф по ОГПО для Шымкента вырос на 4%. Стандартный полис на год стоит от {amount}
+        тенге, со скидкой за безаварийную езду — дешевле.
+      - >-
+        Номер полиса {number_16}, период страхования — 12 месяцев с {date}. Франшиза
+        не применяется.
+      - >-
+        Страховая компания «Номад Гарант Полис» закрыла квартал: выплачено {amount} тенге,
+        дело № {order_no} передано в суд.
+      # Benchmark v1, from the review of names, round 3: ordinary words that end like a surname, in
+      # a list, and a form that points to where the name is.
+      - |-
+        Форма заявления {doc_no}
+        Фамилия: Стр. 2 анкеты
+        Дата: {date}
+    hr:
+      - >-
+        Приказ № {doc_no} от {date}: утвердить график отпусков на следующий год и довести
+        его до сотрудников под подпись.
+      - >-
+        Вакансия: бухгалтер по расчёту заработной платы, город Караганда, оклад от {amount}
+        тенге. Резюме принимаются до {date}.
+      - >-
+        Табельный номер {order_no}: отработано 168 часов, сверхурочных нет. Ведомость
+        № {number_12} передана в бухгалтерию.
+      - >-
+        Корпоративное обучение пройдёт {date} в конференц-зале на улице Кунаева, 8. Тренинг
+        ведёт компания «Билим Про Тренинг», начало в 10:00.
+      - >-
+        Протокол № {doc_no} от {date}. Статус: Одобрен. Тип: Договоров. Разделы: Общие положения,
+        Порядок расчётов и Ответственность сторон. Срок исполнения: 30 дней.
+      - |-
+        Повестка заседания от {date}:
+        - Отчёт за квартал
+        - Бюджет отдела
+        - Разное
+        Кворум: Имеется. Итог — {amount} тенге, решение — отложить.
+      # Benchmark v1, from the review of names, round 3: ordinary words that end like a surname, in
+      # a list, and a form that points to where the name is.
+      - |-
+        Меню корпоративного обеда на {date}
+        Ингредиенты: Калина, Рябина, Осина.
+        Стоимость на человека — {amount} тенге.
+      - |-
+        Анкета кандидата № {order_no}
+        ФИО: См. приложение.
+        Дата подачи: {date}
+    contract:
+      - >-
+        Договор поставки № {doc_no} от {date} заключён между ТОО «Сарыарка Трейд Комплект»
+        и АО «Жетысу Логистик Сервис», сумма договора {amount} тенге.
+      - >-
+        Стороны согласовали продление срока действия договора № {doc_no} до {date}. Остальные
+        условия остаются без изменений.
+      - >-
+        Неустойка составляет 0,1% от суммы просроченного платежа за каждый день, но не более
+        10% от цены договора, то есть не более {amount} тенге.
+      - >-
+        Номер государственной регистрации договора: {number_12_valid}. Объект — нежилое
+        помещение, город Актобе, проспект Абилкайыр хана, 40.
+      - >-
+        Тендер № {number_12}: поставка серверного оборудования, начальная цена {amount} тенге,
+        заявки принимаются до {date} включительно.
+      # Benchmark v1, from the review of names, round 3: ordinary words that end like a surname, in
+      # a list, and a form that points to where the name is.
+      - |-
+        Спецификация к договору {doc_no}
+        Товары: Телятина, Оленина, Ветчина.
+        Сумма {amount} тенге, поставка до {date}.
+    call_centre:
+      - >-
+        Обращение № {order_no}: клиент спросил, как добраться до отделения на улице Абая, 52.
+        Ближайшая остановка — «Проспект Сейфуллина», работаем с 9:00 до 18:00.
+      - >-
+        Обращение № {number_12} закрыто: клиенту разъяснили условия кэшбэка, претензий нет.
+        Оценка качества — 5 из 5.
+      - >-
+        За смену {date} принято 214 звонков, среднее время ожидания — 42 секунды. Чаще всего
+        спрашивали про комиссию {amount} тенге за обслуживание.
+      - >-
+        Абонент уточнил статус заказа № {order_no_11}. Сообщили, что доставка в Павлодар
+        займёт три дня.
+      # Benchmark v1, from the review of names, round 3: ordinary words that end like a surname, in
+      # a list, and a form that points to where the name is.
+      - |-
+        Состав заказа № {order_no}:
+        - Малина
+        - Смородина
+        - Калина
+        Доставка {date}.
+    it_incident:
+      - >-
+        После релиза {git_sha} сервис отчётов возвращает ошибку 500. Идентификатор
+        трассировки: {uuid}. Откат запланирован на вечер.
+      - >-
+        Заявка № {order_no}: пароль от гостевого Wi-Fi спросите у администратора
+        на ресепшене, его меняют каждый понедельник.
+      - >-
+        Задача DATA-{order_no}: пакетная загрузка упала на записи {number_12_valid}, метка
+        времени {timestamp_ms}. Перезапуск прошёл успешно.
+      - >-
+        Сервер db-archive.corp.test недоступен с 03:10, сессия {uuid}. Причина — закончилось
+        место на диске, удалили журналы старше {date}.
+
+  kk:
+    loan:
+      - >-
+        Несие комитеті {date} күнгі № {number_12} өтінімді қарады: {amount} теңге 48 айға
+        сұралған, шешім келесі отырысқа қалдырылды.
+      - >-
+        {number_12_valid} өтінімі скоринг бойынша қабылданбады: соңғы жұмыс орнындағы еңбек
+        өтілі жеткіліксіз. Қайта өтінім 60 күннен кейін беріледі.
+      - >-
+        Байтұрсынұлы көшесі, 65 мекенжайындағы бөлімше автонесие өтінімдерін сағат 9:00-ден
+        18:00-ге дейін қабылдайды. {date} күні {amount} теңгеге өтінім түсті.
+    transfer:
+      - >-
+        {date} күнгі № {order_no} төлем тапсырмасы орындалды, сомасы {amount} теңге, операция
+        референсі {number_12_valid}.
+      - >-
+        {number_16} транзакциясы қабылданбады: жауап коды 05. Кейінірек қайталап көріңіз
+        немесе банкіңізге хабарласыңыз.
+      - >-
+        Тапсырыс № {order_no_11} төленді, чек қосымшаға жіберілді. Тауарды 14 күн ішінде
+        қайтаруға болады.
+      - >-
+        № {order_no_11} тапсырыс бойынша қайтару рәсімделді, ақша үш жұмыс күні ішінде
+        шотқа түседі.
+    insurance:
+      - >-
+        № {number_12} залал {date} күні тіркелді. Зақымдалған автокөлікті қарау Райымбек
+        даңғылы, 212 мекенжайындағы техникалық қызмет көрсету станциясында өтеді.
+      - >-
+        Полис нөмірі {number_16}, сақтандыру кезеңі — {date} бастап 12 ай. Франшиза
+        қолданылмайды.
+      - >-
+        «Номад Кепіл Полис» сақтандыру компаниясы тоқсан ішінде {amount} теңге төледі;
+        залалды реттеудің орташа мерзімі — 9 күн.
+    hr:
+      - >-
+        {date} күнгі № {doc_no} бұйрық: келесі жылға арналған демалыс кестесі бекітілсін және
+        қызметкерлерге қол қойғызып таныстырылсын.
+      - >-
+        Бос орын: жалақы есептеу жөніндегі бухгалтер, Қарағанды қаласы, жалақысы {amount}
+        теңгеден басталады. Түйіндеме {date} дейін қабылданады.
+      - >-
+        Корпоративтік оқыту {date} күні Қонаев көшесі, 8 мекенжайындағы конференц-залда өтеді.
+        Тренингті «Білім Про Тренинг» компаниясы жүргізеді, басталуы сағат 10:00-де.
+      - >-
+        № {doc_no} хаттама, {date}. Мәртебесі: Бекітілді. Түрі: Шарт. Бөлімдер: Жалпы ережелер,
+        Есеп айырысу тәртібі және Тараптардың жауапкершілігі. Мерзімі: 30 күн.
+      - |-
+        Отырыстың күн тәртібі, {date}:
+        1. Тоқсандық есеп
+        2. Бөлім бюджеті
+        3. Әртүрлі
+        Қорытынды — {amount} теңге, шешім — кейінге қалдыру.
+    contract:
+      - >-
+        {date} күнгі № {doc_no} жеткізу шарты «Сарыарқа Трейд Комплект» ЖШС мен
+        «Жетісу Логистик Сервис» АҚ арасында жасалды, шарт сомасы {amount} теңге.
+      - >-
+        Шартты мемлекеттік тіркеу нөмірі: {number_12_valid}. Нысан — тұрғын емес үй-жай,
+        Ақтөбе қаласы, Әбілқайыр хан даңғылы, 40.
+      - >-
+        № {number_12} тендер: серверлік жабдық жеткізу, бастапқы бағасы {amount} теңге,
+        өтінімдер {date} дейін қабылданады.
+    call_centre:
+      - >-
+        № {order_no} өтініш: клиент Абай көшесі, 52 мекенжайындағы бөлімшеге қалай жетуге
+        болатынын сұрады. Ең жақын аялдама — «Сейфуллин даңғылы».
+      - >-
+        № {number_12} өтініш жабылды: клиентке кэшбэк шарттары түсіндірілді, шағымы жоқ.
+        Сапа бағасы — 5-тен 5.
+      - >-
+        Абонент тапсырыс нөмірі {order_no_11} бойынша жеткізу күйін нақтылады. Павлодарға
+        жеткізу үш күн алатыны айтылды.
+      - >-
+        Клиент {order_no_11} нөмірлі тапсырыстың жеткізілу мерзімін сұрады. Курьер ертең
+        түске дейін жеткізетіні айтылды.
+    it_incident:
+      - >-
+        {git_sha} релизінен кейін есеп беру сервисі 500 қатесін қайтарып жатыр. Трассировка
+        идентификаторы: {uuid}. Кері қайтару кешке жоспарланған.
+      - >-
+        DATA-{order_no} тапсырмасы: дестелік жүктеу {number_12_valid} жазбасында тоқтап қалды,
+        уақыт белгісі {timestamp_ms}. Қонақтарға арналған Wi-Fi құпиясөзін әкімшіден сұраңыз.
+
+  mixed:
+    loan:
+      - >-
+        Заявка № {number_12} қаралды: {amount} теңге сұралған, решение келесі комитетке
+        қалдырылды.
+      - >-
+        Абай көшесіндегі филиал автокредитке заявкаларды 9:00-ден 18:00-ге дейін қабылдайды,
+        {date} күні {amount} теңгеге заявка түсті.
+    transfer:
+      - >-
+        Платёжное поручение № {order_no} орындалды, сумма {amount} теңге, референс
+        {number_12_valid}.
+      - >-
+        Транзакция {number_16} өтпеді: код ответа 05. Кейінірек қайталап көріңіз.
+    insurance:
+      - >-
+        Убыток № {number_12} {date} күні тіркелді. Осмотр Райымбек даңғылы, 212
+        мекенжайындағы СТО-да болады.
+    hr:
+      - >-
+        Приказ № {doc_no}: келесі жылдың отпуск графигі бекітілді, сотрудниктерге {date}
+        дейін таныстыру керек.
+      - >-
+        Вакансия: бухгалтер, Қарағанды қаласы, оклад {amount} теңгеден. Резюме {date} дейін
+        қабылданады.
+      - >-
+        Хаттама № {doc_no}, {date}. Статус: Одобрен. Түрі: Договор. Разделы: Жалпы ережелер,
+        Порядок расчётов және Ответственность сторон.
+      - |-
+        Күн тәртібі:
+        Отчёт за квартал
+        Бюджет
+        Әртүрлі
+        Итог — {amount} теңге, срок — {date}.
+    contract:
+      - >-
+        Договор поставки № {doc_no} «Сарыарқа Трейд Комплект» ЖШС пен
+        «Жетісу Логистик Сервис» АҚ арасында жасалды, сумма {amount} теңге.
+      - >-
+        Тендер № {number_12}: серверное оборудование жеткізу, бастапқы баға {amount} теңге,
+        заявки {date} дейін қабылданады.
+    call_centre:
+      - >-
+        Обращение № {number_12} жабылды: клиентке кэшбэк шарттары түсіндірілді, претензия жоқ.
+      - >-
+        Заказ № {order_no_11} бойынша сұрады: доставка Павлодарға үш күнде жетеді дедік.
+    it_incident:
+      - >-
+        Релиз {git_sha} шыққаннан кейін сервис отчётов 500 қайтарып жатыр. Trace id: {uuid},
+        откат кешке жоспарланған.
+
+  en:
+    loan:
+      - >-
+        The credit committee reviewed application No. {number_12} dated {date}: KZT {amount}
+        requested for 48 months; the decision is postponed to the next meeting.
+      - >-
+        Application {number_12_valid} was declined by scoring: the length of service at the
+        current job is too short. A new application is possible in 60 days.
+      - >-
+        The branch at 65 Baitursynov Street accepts car loan applications from 9:00 to 18:00.
+        On {date} it received applications worth KZT {amount}.
+    transfer:
+      - >-
+        Payment order No. {order_no} dated {date} for KZT {amount} was executed; transaction
+        reference {number_12_valid}.
+      - >-
+        Transaction {number_16} was declined by the acquirer with response code 05. Try again
+        later or contact your bank.
+      - >-
+        Order #{order_no_11} is paid and the receipt is in the app. Returns are accepted
+        within 14 days.
+    insurance:
+      - >-
+        Claim No. {number_12} was registered on {date}. The damaged car will be inspected
+        at the service station at 212 Raiymbek Avenue.
+      - >-
+        Policy number {number_16}, insured period: 12 months from {date}. No deductible
+        applies.
+    hr:
+      - >-
+        Order {doc_no} dated {date}: approve the leave schedule for next year and have every
+        employee sign it.
+      - >-
+        Vacancy: payroll accountant, Karaganda, salary from KZT {amount}. Applications are
+        accepted until {date}.
+    contract:
+      - >-
+        Supply contract {doc_no} dated {date} was signed between Saryarka Trade Komplekt LLP
+        and Zhetysu Logistic Service JSC for KZT {amount}.
+      - >-
+        State registration number of the contract: {number_12_valid}. The property is
+        a non-residential unit at 40 Abilkaiyr Khan Avenue, Aktobe.
+      - >-
+        Tender No. {number_12}: supply of server equipment, starting price KZT {amount},
+        bids accepted until {date}.
+    call_centre:
+      - >-
+        Ticket {order_no}: the client asked how to get to the branch at 52 Abay Street.
+        The nearest stop is Seifullin Avenue; opening hours are 9:00 to 18:00.
+      - >-
+        Ticket No. {number_12} is closed: the cashback terms were explained to the client
+        and there are no complaints.
+      - >-
+        The caller checked the status of order No. {order_no_11}. Delivery to Pavlodar takes
+        three days.
+    it_incident:
+      - >-
+        After release {git_sha} the reporting service returns error 500. Trace id: {uuid}.
+        A rollback is planned for the evening.
+      - >-
+        Job DATA-{order_no}: the batch load failed on record {number_12_valid} at
+        {timestamp_ms}. Ask the administrator for the guest Wi-Fi password.
+
+  # Kazakh in Latin letters, as kk_latn.yaml has it: the same look-alikes, a street named
+  # after a person, a city and an invented company. The samples have the language kk and
+  # the script latn.
+  kk_latn:
+    loan:
+      - >-
+        Nesie komiteti № {number_12} otinimdi {date} kuni karady: suralgan soma {amount} tenge,
+        sheshim kelesi otyryska kaldyryldy.
+
+    transfer:
+      - >-
+        Tolem tapsyrmasy № {order_no} oryndaldy: {amount} tenge {date} kuni audaryldy. Tranzaksia
+        nomiri {number_16}.
+      - >-
+        Astana kalasy, Abai dangyly boiynsha bolimshe {date} kuni zhabyk. Anyktama nomiri
+        {order_no}.
+
+    insurance:
+      - >-
+        Saktandyru polisi № {doc_no} {date} kuni ayaktalady. Uzartu kuny — {amount} tenge.
+
+    hr:
+      - >-
+        Buiryk № {doc_no}: Almaty filialynyn kyzmetkerlerine {date} kuni demalys beriledi.
+
+    contract:
+      - >-
+        Shart № {doc_no}, tirkeu nomiri {number_12_valid}: «Bereke Inzhiniring Servis» LLP zhabdykty
+        {date} deiin zhetkizedi.
+
+    call_centre:
+      - >-
+        Tapsyrys № {order_no_11} boiynsha shagym tirkeldi: tauar {date} kuni zhetkizilmegen.
+
+    it_incident:
+      - >-
+        Deploi satti otti: kommit {git_sha}, sessia {uuid}, uakyt belgisi {timestamp_ms}. Kupiasoz
+        ozgergen zhok.

@@ -1,0 +1,31 @@
+# Downloaded NER models; hashes are in models.lock
+models/
+
+# Generated benchmark data
+bench/data/*.jsonl
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Tool caches. .hypothesis/ stores generated examples, which may be synthetic values.
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+
+# Environment files hold credentials. None belongs in this repository.
+.env
+.env.*
+
+# OS and editors
+.DS_Store
+.idea/
+.vscode/

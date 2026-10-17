@@ -1,0 +1,95 @@
+# The root of the airlock-pii repository: a uv workspace with one member, the library.
+#
+# There is no [project] table on purpose: this file holds the development tools and the
+# configuration they share. The package itself is packages/airlock-pii, and the benchmark,
+# bench/, is a folder of scripts. Exact pins and hashes live in uv.lock.
+
+[tool.uv]
+required-version = ">=0.11"
+# The library declares an extra for Presidio (`airlock-pii[presidio]`), and uv locks every
+# extra of a workspace member. presidio-analyzer 2.2.364 asks for numpy<2.5, so with it in
+# this lock numpy would go down for everything, and some thirty packages would enter. This
+# keeps the package out of the lock that the library is tested and shipped from: the extra is
+# locked and tested in a project of its own, packages/airlock-pii/tests_presidio/.
+# bench/tests/test_presidio_project.py fails if it gets in.
+exclude-dependencies = ["presidio-analyzer"]
+
+[tool.uv.workspace]
+members = ["packages/airlock-pii"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16",
+    "mypy>=2.4",
+    "pytest>=9.1",
+    "pytest-cov>=7.1",
+    "hypothesis>=6.168",
+    "pip-audit>=2.10",
+    # The templates of the benchmark are YAML.
+    "pyyaml>=6.0.3",
+    "types-pyyaml>=6.0",
+    # The NER extra of the library, so that its tests and the benchmark can run it.
+    "airlock-pii[ner-ru]",
+]
+
+[tool.uv.sources]
+airlock-pii = { workspace = true }
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["packages/airlock-pii/src", "tools"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "S", "C4", "SIM", "PT", "ASYNC", "TID", "RUF"]
+# RUF001-003 flag Cyrillic letters that look like Latin ones. Russian and Kazakh text in
+# strings, docstrings and comments is the subject of this project, not a mistake.
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests use assert, and fake keys that look like hardcoded passwords.
+"**/tests/**" = ["S101", "S105", "S106"]
+"**/tests_presidio/**" = ["S101", "S105", "S106"]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"litellm".msg = "No LiteLLM: its PyPI package was compromised in March 2026."
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+
+# The natasha packages ship no type information. The library touches them in one module.
+[[tool.mypy.overrides]]
+module = ["slovnet.*", "navec.*", "razdel.*"]
+ignore_missing_imports = true
+
+# Presidio is not installed here. The two baselines of the benchmark run in a project of
+# their own (bench/presidio) and import it inside the functions that need it.
+[[tool.mypy.overrides]]
+module = ["presidio_analyzer.*"]
+ignore_missing_imports = true
+
+# The adapter for Presidio subclasses a class of a package that is not installed here, which
+# mypy then knows as Any. It is checked in full where Presidio is installed:
+# `make test-presidio` runs mypy in the project of the adapter's tests.
+[[tool.mypy.overrides]]
+module = ["airlock_pii.presidio_adapter"]
+disallow_subclassing_any = false
+
+[tool.pytest.ini_options]
+minversion = "9.0"
+testpaths = ["packages/airlock-pii/tests", "bench/tests", "tools/tests"]
+pythonpath = ["tools"]
+addopts = ["--import-mode=importlib", "--strict-markers", "--strict-config", "-m", "not slow"]
+xfail_strict = true
+markers = [
+    "slow: performance tests, not run in CI",
+    "ner: needs the ner-ru extra and the model files of make models; never skipped in CI",
+]
+
+[tool.coverage.run]
+branch = true
+# The adapter for Presidio cannot be imported where Presidio is not installed. It is measured,
+# and held to 100%, where it is: `make test-presidio`.
+omit = ["*/airlock_pii/presidio_adapter.py"]

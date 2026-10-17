@@ -1,0 +1,40 @@
+# The environment of the Presidio baselines of the benchmark (bench/baselines/presidio_*.py).
+#
+# A project of its own, with a lock of its own next to this file, and no member of the
+# workspace: Presidio, spaCy and the thirty packages they bring are needed to run two
+# baselines and for nothing else, so they stay out of the lock that the library is tested and
+# shipped from. `make bench-compare` builds this environment on first use
+# (`uv run --project bench/presidio --locked`) and runs bench/predict.py in it. Why it is set up
+# this way: presidio-analyzer 2.2.364 asks for numpy<2.5, and one lock has one numpy, so with
+# Presidio in it the library's NER would be tested against a numpy that
+# `pip install airlock-pii[ner-ru]` no longer gives a user.
+#
+# The two language models are spaCy's own wheels, which are published on GitHub and not on
+# PyPI. Each is named by its URL below and pinned by its SHA-256 in uv.lock, which
+# `uv run --locked` checks before it installs anything; uv takes no hash in a URL here. The
+# two hashes are written out in bench/tests/test_presidio_project.py, which fails if the lock
+# says anything else:
+#   en_core_web_lg 3.8.0  293e9547a655b25499198ab15a525b05b9407a75f10255e405e8c3854329ab63
+#   ru_core_news_lg 3.8.0 90bd584be86772b647e1b15cdc62e09d3a7182284ee23da95e19c2bf71aa0189
+
+[project]
+name = "bench-presidio"
+version = "0"
+description = "Environment for the Presidio baselines of the airlock-pii benchmark."
+requires-python = ">=3.12"
+dependencies = [
+    # Presidio's analyzer, the version the published table was made with.
+    "presidio-analyzer==2.2.364",
+    # Presidio's default model for English: what `AnalyzerEngine()` loads. 400.7 MB.
+    "en-core-web-lg==3.8.0",
+    # spaCy's largest model for Russian, for the baseline with a Russian model. 513.4 MB.
+    "ru-core-news-lg==3.8.0",
+]
+
+[tool.uv]
+# Nothing here is a package to build: the project is its dependencies.
+package = false
+
+[tool.uv.sources]
+en-core-web-lg = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl" }
+ru-core-news-lg = { url = "https://github.com/explosion/spacy-models/releases/download/ru_core_news_lg-3.8.0/ru_core_news_lg-3.8.0-py3-none-any.whl" }

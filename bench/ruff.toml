@@ -1,0 +1,7 @@
+# The benchmark is a set of scripts that import each other by name, the way Python does when
+# one of them is run. To them the modules of this folder are first-party, and airlock_pii is
+# a library they use, like PyYAML.
+extend = "../pyproject.toml"
+src = ["."]
+# Like the library it measures, the benchmark runs on Python 3.11 and later.
+target-version = "py311"

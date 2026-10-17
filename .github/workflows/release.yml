@@ -1,0 +1,146 @@
+name: release
+
+# A tag is a release. `vX.Y.ZrcN` goes to TestPyPI and nowhere else; `vX.Y.Z` goes to PyPI and
+# nowhere else, through an environment that waits for a reviewer. Both are published with
+# Trusted Publishing: PyPI and TestPyPI trust this workflow in this repository, and no token
+# is stored anywhere. A tag that does not name the version of the package is refused before
+# anything is built (tools/release_guard.py).
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+# One release of a tag at a time, and never cancelled halfway through an upload.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      index: ${{ steps.guard.outputs.index }}
+      version: ${{ steps.guard.outputs.version }}
+    steps:
+      # Actions are pinned to commit SHAs: a tag can be moved, a commit cannot.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.23"
+          enable-cache: false
+
+      # The tag has to be `v` and the version in packages/airlock-pii/pyproject.toml. A
+      # release candidate goes to TestPyPI, a final version to PyPI, and anything else is
+      # refused. A final version is also refused while the README has a placeholder link.
+      - name: The tag is the version, and says where it goes
+        id: guard
+        env:
+          TAG: ${{ github.ref_name }}
+        run: uv run --no-project python tools/release_guard.py --tag "$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Lockfile is up to date
+        run: uv lock --check
+
+      - name: Build the wheel and the source distribution
+        run: make build
+
+      # Each of the two files is installed where nothing else is, and the README's
+      # quickstart is run there as it is written. What is uploaded below is these files.
+      - name: Install cleanly, run the quickstart
+        run: make acceptance
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  testpypi:
+    name: publish to TestPyPI
+    needs: build
+    if: needs.build.outputs.index == 'testpypi'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/project/airlock-pii/${{ needs.build.outputs.version }}/
+    permissions:
+      # The identity that TestPyPI trusts, and that the attestations are signed with.
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist
+          path: dist
+
+      - uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          packages-dir: dist
+          attestations: true
+          print-hash: true
+
+  pypi:
+    name: publish to PyPI
+    needs: build
+    if: needs.build.outputs.index == 'pypi'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    # The environment has a required reviewer: the job waits here until the release is
+    # approved, and PyPI accepts an upload from this environment only.
+    environment:
+      name: pypi
+      url: https://pypi.org/project/airlock-pii/${{ needs.build.outputs.version }}/
+    permissions:
+      # The identity that PyPI trusts, and that the attestations are signed with.
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist
+          path: dist
+
+      - uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          packages-dir: dist
+          attestations: true
+          print-hash: true
+
+  # The acceptance of the release: `pip install airlock-pii`, from the index it went to, in an
+  # environment that holds nothing else, and the README's quickstart as it is written. An
+  # index needs a moment after an upload, so the install is tried for five minutes.
+  installed:
+    name: install from the index, run the quickstart
+    needs: [build, testpypi, pypi]
+    if: ${{ !cancelled() && (needs.testpypi.result == 'success' || needs.pypi.result == 'success') }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.23"
+          enable-cache: false
+
+      - name: From TestPyPI
+        if: needs.build.outputs.index == 'testpypi'
+        env:
+          VERSION: ${{ needs.build.outputs.version }}
+        run: >-
+          uv run --no-project python tools/acceptance.py --version "$VERSION"
+          --index-url https://test.pypi.org/simple/
+
+      - name: From PyPI
+        if: needs.build.outputs.index == 'pypi'
+        env:
+          VERSION: ${{ needs.build.outputs.version }}
+        run: uv run --no-project python tools/acceptance.py --version "$VERSION"

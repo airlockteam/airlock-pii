@@ -1,0 +1,725 @@
+# Words that say what the capitalized words next to them are. Unverified: written from
+# general knowledge. See README.md in this folder.
+#
+# One word per line, in lower case. How a word is matched:
+# - A word of four letters or more is a stem and may carry up to six more letters: Russian
+#   and Kazakh put their endings after it, so "улиц" covers "улица" and "улице", and "көшесі"
+#   covers "көшесінде".
+# - A shorter word, and any word with a full stop or a hyphen, is matched as it is written.
+#   So is every word of [verb], [day-or-month], [and] and [before-a-subject].
+# - A word of [person], [label] or [name-label] may have a colon after it, with one or two
+#   words in between: "Ответственный: Петров", "Секретарь собрания: Ахметова".
+# - Case is ignored, except in [organization] and [sole-proprietor]: those are written in
+#   capitals, and "АО" is not "ао".
+
+# A name next to one of these is a street or a place, not a person. Russian puts the word
+# before the name ("улица Абая"), Kazakh after it ("Абай көшесі"); both sides are checked.
+[place]
+улиц
+ул.
+проспект
+просп.
+пр.
+пр-т
+микрорайон
+мкр.
+мкр
+бульвар
+переулок
+переулк
+пер.
+площад
+шоссе
+город
+область
+област
+район
+посёлок
+поселок
+село
+села
+селе
+аул
+остров
+көшесі
+көше
+даңғылы
+даңғыл
+шағын аудан
+ықшам аудан
+алаңы
+тұйығы
+қаласы
+қала
+облысы
+облыс
+ауданы
+аудан
+ауылы
+ауыл
+street
+avenue
+square
+district
+
+# The name of a company stands next to one of these, before or after, in quotes or without.
+[organization]
+ТОО
+АО
+ЖШС
+АҚ
+ООО
+ОАО
+ЗАО
+ПАО
+НАО
+РГП
+ГКП
+КГП
+РГУ
+КГУ
+ОО
+ОФ
+НКО
+КХ
+ШҚ
+ЖАҚ
+LLP
+JSC
+LLC
+Ltd
+Inc
+GmbH
+
+# A sole proprietor trades under their own name: what follows is a person.
+[sole-proprietor]
+ИП
+ЖК
+
+# What a text calls the person it is about. A surname alone counts as a name right after one
+# of these. At the start of a sentence they are written with a capital and are not part of
+# the name that follows.
+[person]
+клиент
+клиентк
+заёмщик
+заемщик
+созаёмщик
+созаемщик
+поручител
+залогодател
+директор
+руководител
+начальник
+сотрудник
+сотрудниц
+работник
+менеджер
+бухгалтер
+юрист
+инженер
+специалист
+оператор
+кассир
+агент
+консультант
+андеррайтер
+эксперт
+гражданин
+гражданк
+господин
+госпож
+товарищ
+коллег
+получател
+отправител
+плательщик
+вносител
+бенефициар
+страховател
+застрахованн
+выгодоприобретател
+владел
+держател
+заявител
+истец
+ответчик
+представител
+доверенн
+абонент
+пациент
+студент
+доктор
+профессор
+супруг
+супруг
+қарыз алушы
+алушы
+жіберуші
+төлеуші
+кепілгер
+кепіл беруші
+қызметкер
+маман
+басшы
+бастық
+азамат
+азаматша
+иесі
+сақтанушы
+өтініш беруші
+сарапшы
+бухгалтер
+заңгер
+әріптес
+кеңесші
+# Who is who in the minutes of a meeting and under a document: before the name, before a
+# colon ("Председатель: Иванов") or after a dash ("Иванов — председатель").
+председател
+секретар
+докладчик
+подписант
+исполнител
+участник
+заместител
+төраға
+төрайым
+хатшы
+баяндамашы
+орындаушы
+қатысушы
+жауапты
+klient
+borrower
+client
+customer
+sender
+recipient
+beneficiary
+cardholder
+policyholder
+employee
+manager
+director
+accountant
+colleague
+
+# Verbs that open a request, and verbs of saying. Right after one of these a surname or a
+# patronymic alone is a person: "Напиши Ахметову", "позвонила Петрова". With a capital such
+# a verb is no part of a name. Every form is listed, and a verb is matched as it is written
+# whatever its length: a stem would also begin a name ("call" and "Callum"). A word that is
+# also a name does not belong here ("mark", "will").
+[verb]
+# What someone is asked to do: one person, and several or one politely.
+напиши
+напишите
+ответь
+ответьте
+позвони
+позвоните
+перезвони
+перезвоните
+передай
+передайте
+скажи
+скажите
+сообщи
+сообщите
+спроси
+спросите
+попроси
+попросите
+напомни
+напомните
+отправь
+отправьте
+направь
+направьте
+перешли
+перешлите
+поблагодари
+поблагодарите
+поздравь
+поздравьте
+пригласи
+пригласите
+уведоми
+уведомите
+предупреди
+предупредите
+составь
+составьте
+подготовь
+подготовьте
+переведи
+переведите
+проверь
+проверьте
+исправь
+исправьте
+сделай
+сделайте
+объясни
+объясните
+расскажи
+расскажите
+помоги
+помогите
+перепиши
+перепишите
+сократи
+сократите
+найди
+найдите
+посчитай
+посчитайте
+сравни
+сравните
+проанализируй
+проанализируйте
+оцени
+оцените
+создай
+создайте
+сгенерируй
+сгенерируйте
+придумай
+придумайте
+перефразируй
+перефразируйте
+дополни
+дополните
+уточни
+уточните
+сформулируй
+сформулируйте
+покажи
+покажите
+опиши
+опишите
+предложи
+предложите
+добавь
+добавьте
+удали
+удалите
+замени
+замените
+# What someone did: he, she, they.
+звонил
+звонила
+звонили
+позвонил
+позвонила
+позвонили
+написал
+написала
+написали
+ответил
+ответила
+ответили
+сообщил
+сообщила
+сообщили
+сказал
+сказала
+сказали
+спросил
+спросила
+спросили
+попросил
+попросила
+попросили
+приходил
+приходила
+приходили
+обратился
+обратилась
+обратились
+# What someone did that takes no person as its object: came, left, signed, paid. After a
+# verb that does ("уведомил", "пригласил") stands whoever it was done to, and in the plural
+# that looks like a surname: "уведомил Дольщиков". Such verbs are not here.
+приехал
+приехала
+приехали
+пришел
+пришёл
+пришла
+ушел
+ушёл
+ушла
+ушли
+уехал
+уехала
+уехали
+вернулся
+вернулась
+вернулись
+вышел
+вышла
+подписал
+подписала
+подписали
+подал
+подала
+подали
+оплатил
+оплатила
+оплатили
+# Kazakh puts the verb last, so these open a sentence less often.
+жаз
+жазыңыз
+айт
+айтыңыз
+сұра
+сұраңыз
+хабарла
+хабарлаңыз
+жібер
+жіберіңіз
+тексер
+тексеріңіз
+аудар
+аударыңыз
+түсіндір
+түсіндіріңіз
+көмектес
+көмектесіңіз
+дайында
+дайындаңыз
+write
+email
+remind
+notify
+inform
+contact
+message
+reply
+tell
+send
+ask
+call
+draft
+translate
+check
+explain
+summarize
+summarise
+rewrite
+prepare
+create
+review
+compare
+help
+find
+show
+give
+make
+
+# Forms of address. One of these before a name, or one of [honorific-after] after it, makes a
+# name more certain.
+[honorific]
+уважаем
+многоуважаем
+дорог
+құрметті
+қадірлі
+г-н
+г-на
+г-ну
+г-ном
+г-не
+г-жа
+г-жи
+г-же
+г-жу
+г-жой
+господин
+госпож
+mr
+mr.
+ms
+ms.
+mrs
+mrs.
+dear
+dr.
+
+[honorific-after]
+мырза
+ханым
+аға
+апа
+апай
+әпке
+тәте
+мырзаға
+ханымға
+
+# Greetings and thanks. A given name that is also an ordinary word counts as a name next to
+# one of these: "Арман, сәлем!".
+[greeting]
+здравствуйте
+здравствуй
+привет
+приветствую
+добрый день
+доброе утро
+добрый вечер
+спасибо
+сәлем
+сәлеметсіз бе
+сәлеметсіздер ме
+қайырлы күн
+қайырлы таң
+қайырлы кеш
+ассалаумағалейкум
+рахмет
+рақмет
+hello
+hi
+hey
+thanks
+thank you
+good morning
+good afternoon
+
+# "Son of" and "daughter of", written apart or after a hyphen. With the name before it this
+# is a patronymic: "Нұрлан Сәкен ұлы".
+[particle]
+ұлы
+улы
+қызы
+кызы
+оглы
+оғлы
+углы
+угли
+кизи
+uly
+kyzy
+qyzy
+ogly
+ugli
+
+# Right after the name of a weekday or of a month that is also a given name ([calendar] in
+# ordinary_words.txt), one of these says that the day, the month or the holiday is meant and
+# no person: "Жұма күні", "Қаңтар айында", "Наурыз мейрамымен", "Наурыз мерекесімен", "Жұма
+# күндері". Each is listed in every case: the word with its possessive ending, then the
+# genitive, dative, accusative, locative, ablative and instrumental built on it. "күнгі", of
+# the day, stands before a noun and has one form: "Жұма күнгі жиналыс". A word typed without
+# the Kazakh letters ("куни") counts as the same word.
+[day-or-month]
+күні
+күнін
+күніне
+күнінде
+күнінен
+күнімен
+күнінің
+айы
+айын
+айына
+айында
+айынан
+айымен
+айының
+мейрамы
+мейрамын
+мейрамына
+мейрамында
+мейрамынан
+мейрамымен
+мейрамының
+мерекесі
+мерекесін
+мерекесіне
+мерекесінде
+мерекесінен
+мерекесімен
+мерекесінің
+күндері
+күндерін
+күндеріне
+күндерінде
+күндерінен
+күндерімен
+күндерінің
+күнгі
+
+# The words that join the names of a list: "Иванов и Петров", "Иванов пен Петров". The base
+# form of a surname after one of these is a person where a name stands before it.
+[and]
+и
+или
+либо
+мен
+пен
+бен
+және
+немесе
+
+# Words after which the subject of a sentence stands: when, if, that, but, and the forms of
+# "to be". The base form of a surname ("Петров", "Сергеев") is also the genitive plural of a
+# noun ("Застройщиков", "Дольщиков"), which contracts write with a capital. So alone it is a
+# person only after one of these, in a list of names, or after a dash. No preposition is
+# here: after "от", "к", "с" and "о" a person's name has an ending ("от Петрова"), and what
+# has none is a noun in the plural.
+[before-a-subject]
+а
+но
+что
+если
+когда
+пока
+хотя
+чтобы
+как
+где
+куда
+ведь
+пусть
+это
+вот
+даже
+только
+лишь
+именно
+тоже
+также
+не
+ни
+уже
+еще
+снова
+опять
+вчера
+сегодня
+завтра
+позавчера
+послезавтра
+сейчас
+теперь
+потом
+затем
+тогда
+утром
+днем
+вечером
+ночью
+сначала
+наконец
+скоро
+недавно
+давно
+иногда
+всегда
+обычно
+часто
+редко
+сразу
+там
+здесь
+тут
+кстати
+однако
+поэтому
+итак
+значит
+конечно
+наверное
+возможно
+вероятно
+кажется
+видимо
+был
+были
+будет
+будут
+кеше
+бүгін
+ертең
+қазір
+енді
+содан
+сосын
+бірақ
+алайда
+сондықтан
+егер
+ал
+тағы
+мүмкін
+әрине
+таңертең
+кешке
+жақында
+онда
+мұнда
+сонда
+
+# Words that head a name only with a colon after them: "Ответственный: Петров",
+# "Присутствовали: Иванов". Without the colon they are not words for a person: after
+# "ответственность" stands whoever bears it, and in a contract that is a noun in the plural.
+[label]
+ответственн
+присутствовал
+присутствующ
+приглашен
+приглашён
+қатысқан
+
+# The fields of a form that hold a name. After one of these and a colon the capitalized words
+# are a name whatever they are: the label says so, and no ending is asked for. Not "имя",
+# "аты" or "name" alone, which also name files and products.
+[name-label]
+фамилия
+фио
+ф.и.о.
+ф.и.о
+ф. и. о.
+отчество
+тегі
+аты-жөні
+әкесінің аты
+surname
+last name
+full name
+
+# Abbreviations that a form writes where a name belongs, to say where the name is: "ФИО: См.
+# приложение", "Фамилия: Стр. 2". After the field of a form, one of these with its full stop
+# and more on the same line is no name. Written without the full stop, two letters or more:
+# one letter and a full stop is an initial. A closed list on purpose. Any short word with a
+# full stop would also be a short surname at the end of a sentence ("ФИО: Ким. тел. ...").
+[abbreviation]
+см
+стр
+прил
+табл
+рис
+разд
+гл
+доп
+исх
+вх
+тел
+моб
+эл
+ул
+просп
+обл
+изм
+прим
+ред
+ref
+encl
+att
+tel
+mob
+ext
+fig
+tab
+sec
+pp
+cf
+vol

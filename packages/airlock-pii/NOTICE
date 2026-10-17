@@ -1,0 +1,82 @@
+airlock-pii
+Copyright 2026 the Airlock authors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It includes patterns adapted from gitleaks
+----------------------------------------
+
+The patterns of airlock_pii/recognizers/common/secrets.py for AWS access key ids, OpenAI,
+Anthropic and Google API keys, GitHub, GitLab and Slack tokens, JSON Web Tokens and private-key
+blocks are adapted from the rules of gitleaks (https://github.com/gitleaks/gitleaks), file
+config/gitleaks.toml as of commit 09242ce9c8a60d9b051fc2d166f9e849b88c7ac0 (2025-11-20). So are
+the prefixes and the lengths of the made-up secrets that airlock_pii/synthetic.py generates.
+What changed: each repetition has an upper bound, the boundaries of a key are those of a run of
+its own characters, and the entropy thresholds and allow lists of the rules are not used.
+
+gitleaks is distributed under the MIT License:
+
+    MIT License
+
+    Copyright (c) 2019 Zachary Rice
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+
+The optional Russian NER runs software and models of the natasha project
+-------------------------------------------------------------------------
+
+Nothing of this is inside the package. The extra `ner-ru` installs three packages of the
+natasha project (https://github.com/natasha) from PyPI: slovnet 0.6.0, navec 0.10.0 and
+razdel 0.5.0. The recognizer airlock_pii/recognizers/common/ner_ru.py runs slovnet's model for
+named entities with them, and builds it the way slovnet's and navec's own loaders do.
+
+The two model files are fetched by `python -m airlock_pii models download` and are not part
+of the package either: slovnet_ner_news_v1.tar (the NER model) and
+navec_news_v1_1B_250K_300d_100q.tar (the embeddings it was trained with). The natasha project
+publishes both, in its own storage and inside its `natasha` package on PyPI. Where copies of
+the two files are attached to a release of this project, they are those files unchanged, by
+the SHA-256 that airlock_pii/data/models.lock gives for each, under the licence below.
+
+slovnet, navec and razdel are distributed under the MIT License, and each of the three carries
+the licence file below. The `natasha` package, where the two model files are as well, is
+under the MIT License too: its licence file has the same terms under the line
+"Copyright (c) 2016".
+
+    MIT License
+
+    Copyright (c) 2017
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.

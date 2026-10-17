@@ -1,0 +1,122 @@
+# The endings that Russian and Kazakh surnames and patronymics carry. Unverified: written
+# from general knowledge. See README.md in this folder.
+#
+# One ending per line, in its base form. The case forms (Иванова, Иванову, Ивановым;
+# Петровны, Петровне) are worked out in airlock_pii.recognizers._names.
+#
+# An ending of a "weak" section is shared with many ordinary words ("Каспийский",
+# "Москвич", "Berlin"). A word with such an ending counts as part of a name only next to a
+# given name, a patronymic or initials.
+
+[surname]
+ов
+ев
+ин
+цын
+
+[surname-weak]
+ский
+цкий
+енко
+ук
+юк
+чук
+ян
+янц
+швили
+дзе
+
+[patronymic]
+ович
+евич
+овна
+евна
+ична
+инична
+
+# "Son of" and "daughter of" at the end of a Kazakh patronymic or surname, as Kazakh writes
+# them and as they are typed without Kazakh letters.
+[patronymic-kk]
+ұлы
+қызы
+улы
+кызы
+
+[patronymic-weak]
+ич
+
+[surname-latin]
+ov
+ova
+ev
+eva
+yev
+yeva
+iev
+ieva
+
+[surname-latin-weak]
+in
+ina
+yn
+yna
+skiy
+sky
+ski
+skaya
+enko
+yan
+ian
+shvili
+dze
+chuk
+
+[patronymic-latin]
+ovich
+evich
+ovna
+evna
+ichna
+uly
+kyzy
+qyzy
+ogly
+
+[patronymic-latin-weak]
+ich
+
+# What Kazakh given names are often made with at the end: Жұмабай, Тұрсынбек, Әбілхан,
+# Нұржан, Сейтқали, Айгүл. A surname in the Kazakh style is such a name, an ancestor's. These
+# are no sign of a name: too many ordinary words end the same way. They say one thing only.
+# A word for a street or for a person may carry an ending ("көшесінде", "клиента"), and no
+# ending of a case or of a plural looks like one of these, so a capitalized word that ends
+# so is not such a word with an ending: "Көшербай" is a surname, and no form of "көше".
+[given-kk]
+бай
+бек
+хан
+жан
+ғали
+қали
+гүл
+бике
+
+# The same endings in Latin letters, as data/latin.txt spells them: Zhumabay, Zhumabai,
+# Tursynbek, Abilkhan, Nurzhan, Seitgali, Seitkali and Seitqali, Aigul. In Latin letters a
+# given name that is also a word ("Arman", "Kanat") is no person by its capital, and a word
+# that ends so next to it is its surname; where a sentence opens with such a word before a
+# given name, it is the surname too. Three spellings are left out, because too many words
+# that are no names end so: "-han" (Afghan, Jonathan), "-jan" (Trojan) and "-bike".
+# "-gali" and "-kali" also end a Russian verb in the past, typed in Latin letters
+# ("pomogali", "iskali"), so they do not count for the word that opens a sentence.
+[given-kk-latin]
+bay
+bai
+bek
+khan
+zhan
+gali
+kali
+gul
+qali
+ghali

@@ -1,0 +1,230 @@
+# Benchmark templates in mixed Russian and Kazakh: original text, written for this benchmark.
+#
+# This is how colleagues in Kazakhstan write to each other in a chat or a short note: a Kazakh
+# sentence with Russian terms, Russian nouns with Kazakh endings, and both languages side by
+# side on a form. The slots and the rules are those of ru.yaml; a case tag is that of the
+# language the sentence around the name is in.
+
+lang: mixed
+
+templates:
+  loan:
+    - >-
+      Сәлем, коллеги! Клиент {PERSON} бүгін кредитке заявка қалдырды, ИИН {IIN}. Скоринг өтті,
+      енді ручная проверка керек.
+    - >-
+      Қайырлы күн! По заявке № {order_no} шешім шықты ма? Заёмщик — {PERSON}, ЖСН {IIN},
+      сумма {amount} теңге.
+    - >-
+      Кредитный комитет мақұлдады: {PERSON}, {IIN}, лимит {amount} тг. Договорға ертең
+      филиалда қол қоюға болады.
+    - >-
+      Сіздің ипотека бойынша өтініміңіз қаралып жатыр. Уточнить статус можно по телефону
+      {PHONE} или написать на {EMAIL}.
+    - >-
+      Созаёмщик туралы мәлімет жетіспейді: {PERSON}, ИИН {IIN}, тел. {PHONE}. Кредитное бюро
+      келісімінсіз заявканы әрі қарай жібере алмаймыз.
+    - >-
+      Залог бойынша: {PERSON} (ЖСН {IIN}) көлігін кепілге қояды, оценка — {amount} теңге.
+      Документтерді {EMAIL} адресіне жібердім.
+    - >-
+      Досрочное погашение жасалды: {CARD} картасынан {amount} теңге списали. Справка
+      об отсутствии задолженности керек, клиент күтіп отыр.
+    - >-
+      Работодатель расталды: ТОО «Нұр Отау Сауда», БИН {BIN}. Отдел кадров контактісі —
+      {PERSON}, {PHONE}.
+    # Benchmark v1: a name that opens the text or a sentence, where a capital letter says nothing.
+    # Given name first or surname first, as the generator draws it.
+    - >-
+      {PERSON} өтінім берді, но документы неполные: нужен ИИН и справка о доходах. Телефон: {PHONE}.
+
+  transfer:
+    - >-
+      Перевод өтпей жатыр: отправитель {PERSON}, карта {CARD}, сумма {amount} теңге.
+      Клиент төлемді тауып беруді сұрайды.
+    - >-
+      Реквизиттер / Реквизиты: ТОО «Көкжиек Жиһаз Әлемі», БСН / БИН {BIN},
+      ЖСК / ИИК {KZ_IBAN}.
+    - >-
+      Айлық түсті ме? {PERSON}, ИИН {IIN}, счёт {KZ_IBAN} — бухгалтерия кеше {amount}
+      теңге жіберген.
+    - >-
+      Мына шотқа {amount} теңге аударып жіберші: {KZ_IBAN}. Получатель — {PERSON},
+      назначение — қарызды қайтару.
+    - >-
+      Клиент {PERSON} {CARD} картасындағы автоплатёжді өшіруді сұрайды, ақша екі рет
+      списывается.
+    - >-
+      По номеру {PHONE} аударым «в обработке» статусында тұр, сумма {amount} теңге.
+      Получатель в приложении — {PERSON}.
+    - >-
+      Возврат жасалды: чек № {order_no}, ақша {CARD} картасына 5 рабочих дней ішінде түседі.
+      Уведомление {EMAIL} поштасына кетті.
+    - >-
+      Ошибочный платёж: {amount} теңге {KZ_IBAN} шотына кетіп қалған. Просим вернуть,
+      хат {date} күні жіберілді.
+    # A name that opens a sentence, with no word for a person next to it: where a capital
+    # letter says nothing, and a surname without an ending says nothing either.
+    - >-
+      {PERSON} жазды: {amount} теңге перевод әлі түскен жоқ, счёт {KZ_IBAN}. Тексеріп
+      беріңіздерші.
+    # Benchmark v1: a name that opens the text or a sentence, where a capital letter says nothing.
+    # Given name first or surname first, as the generator draws it.
+    - >-
+      Перевод завис. {PERSON} ақшаны {KZ_IBAN} шотына күтіп отыр, просит ускорить.
+
+  insurance:
+    - >-
+      Страховой случай тіркелді: страхователь {PERSON}, ИИН {IIN}, ДТП {date} күні болған,
+      ущерб шамамен {amount} теңге.
+    - >-
+      Выплата мақұлданды, {amount} теңгені {KZ_IBAN} шотына аударамыз. Получатель — {PERSON}.
+    - >-
+      Полис КАСКО рәсімделді: {PERSON}, ЖСН {IIN}. Премия {CARD} картасымен төленді.
+    - >-
+      Эксперт ертең көлікті қарайды. Владелец: {PERSON}, {PHONE}. Адрес — Сәтбаев көшесі, 90.
+    - >-
+      Убыток бойынша документтер жетіспейді: техпаспорт көшірмесі мен заявление. Сканды
+      {EMAIL} адресіне жіберіңіз.
+    - >-
+      Корпоративный договор: «Дәнекер Фарм Импорт» ЖШС, БИН {BIN}, 124 сотрудник
+      сақтандырылды, премия {amount} теңге.
+    - >-
+      Клиент договорды бұзғысы келеді, возврат премии {CARD} картасына жасалсын дейді.
+      Заявление {date} күні қабылданды.
+    - >-
+      Квартираны су басып кеткен: {PERSON}, {PHONE}, {EMAIL}. Ущерб {amount} теңгеге
+      бағаланды, акт приложен.
+    # Benchmark v1: a name that opens the text or a sentence, where a capital letter says nothing.
+    # Given name first or surname first, as the generator draws it.
+    - >-
+      {PERSON} сақтандыру төлемін сұрайды, сумма {amount} теңге, счёт {KZ_IBAN}.
+
+  hr:
+    - >-
+      Құрметті әріптестер! С понедельника бізге жаңа аналитик қосылады — {PERSON}.
+      Почтасы: {EMAIL}.
+    - >-
+      Пропуск жасату үшін данные керек: {PERSON}, ИИН {IIN}, сот. {PHONE}.
+    - >-
+      Отпускқа заявление: {PERSON} {date} бастап 14 күнге трудовой отпуск сұрайды.
+    - |-
+      Тегі, аты / Фамилия, имя: {PERSON}
+      ЖСН / ИИН: {IIN}
+      Телефон: {PHONE}
+      E-mail: {EMAIL}
+    - >-
+      Зарплатный проект бойынша: {PERSON}, шоты {KZ_IBAN}, картасы {CARD}. Проверьте,
+      пожалуйста, дұрыс па.
+    - >-
+      Командировка Атырауға: {PERSON}, {date} — {date}. Суточныйды {CARD} картасына
+      аударыңыздар.
+    - >-
+      Кандидат келді: {PERSON}, {PHONE}, {EMAIL}. Собеседование бейсенбіде сағат 15:00-де.
+    - >-
+      Материальная помощь тағайындалды: {PERSON:dat} {amount} теңге, {KZ_IBAN} шотына
+      перечислить ету керек.
+    # A name that opens a sentence, with no word for a person next to it: where a capital
+    # letter says nothing, and a surname without an ending says nothing either.
+    - >-
+      {PERSON} бүгін офиске келмейді, удалёнкада. Срочный вопрос болса, {PHONE} нөміріне
+      звондаңыздар.
+
+    - >-
+      Жиналыс хаттамасы № {doc_no}, {date}. Присутствовали: {PERSON:surname}, {PERSON:surname}
+      и {PERSON:surname}. Төраға: {PERSON:surname}, секретарь: {PERSON}. Ответственный:
+      {PERSON:surname}.
+    - |-
+      Қатысушылар:
+      {PERSON:surname}
+      {PERSON:surname}
+      {PERSON:surname}
+      Исполнитель: {PERSON:surname}, срок до {date}.
+    # Benchmark v1: a name that opens the text or a sentence, where a capital letter says nothing.
+    # Given name first or surname first, as the generator draws it.
+    - >-
+      {PERSON} завтра жұмысқа шығады, пропуск оформите. Почта: {EMAIL}.
+  contract:
+    - >-
+      Договор аренды № {doc_no}: арендодатель — {PERSON}, ИИН {IIN}. Ай сайынғы төлем —
+      {amount} теңге.
+    - >-
+      Реквизиттерді жіберемін: ТОО «Береке Инжиниринг Сервис», БИН {BIN}, ИИК {KZ_IBAN}.
+      Счёт на оплату ертең болады.
+    - >-
+      Актіге қол қойылды: Заказчик атынан — {PERSON}, Подрядчик атынан — {PERSON}.
+    - >-
+      Доверенность {PERSON:dat} берілді, ИИН {IIN}: налоговый органдарда компания мүддесін
+      білдіреді.
+    - >-
+      Договор бойынша уведомления {EMAIL} адресіне және {PHONE} нөміріне жіберіледі.
+    - >-
+      Допсоглашение дайын: Исполнительдің жаңа реквизиттері — ИИК {KZ_IBAN}, БИН {BIN}.
+    - >-
+      Самозанятыймен договор жасалды: {PERSON}, {IIN}. Вознаграждение {CARD} картасына
+      аударылады.
+    - >-
+      Договор {date} бастап расторгается. Обеспечительный платёж {amount} теңге {KZ_IBAN}
+      шотына қайтарылады.
+    - >-
+      ЖК {PERSON} реквизиттері: ИИН {IIN}, ИИК {KZ_IBAN}. Счёт на оплату {amount} теңгеге
+      выставлен.
+    # Benchmark v1: a name that opens the text or a sentence, where a capital letter says nothing.
+    # Given name first or surname first, as the generator draws it.
+    - >-
+      Шарт дайын. {PERSON} подпишет его в четверг, ЖСН {IIN}.
+
+  call_centre:
+    - >-
+      Клиент {PERSON} звонил, двойное списание дейді. {PHONE} нөміріне 18:00-ден кейін
+      перезвонить ету керек.
+    - >-
+      Приложениеге кіре алмай жатыр, СМС келмейді. Анкетадағы номер: {PHONE}, ИИН {IIN}.
+    - >-
+      Обращение № {order_no}: клиент {CARD} картасын разблокировать етуді сұрайды, кодовое
+      слово дұрыс айтылды.
+    - >-
+      Перезвонить: {PHONE}. Клиент — {PERSON}, сұрағы досрочное погашение туралы.
+    - >-
+      ИИН айтты: {IIN}. График платежей {EMAIL} поштасына жіберуді сұрады.
+    - >-
+      Клиент номерін ауыстырғысы келеді: старый {PHONE}, жаңасы {PHONE}. Удостоверениемен
+      отделениеге келу керек.
+    - >-
+      Карта жоғалған: {CARD} заблокирована по просьбе владельца. Иесі — {PERSON}.
+    - >-
+      Абонент {KZ_IBAN} шотына перевод неге түспегенін сұрайды. Отправитель —
+      ТОО «Тұмар Маркет Плюс», платёж {date} күні жасалған.
+    - >-
+      ИП {PERSON} эквайринг қоса алмай жатыр, {PHONE} нөміріне перезвонить ету керек.
+    # Benchmark v1: a name that opens the text or a sentence, where a capital letter says nothing.
+    # Given name first or surname first, as the generator draws it.
+    - >-
+      {PERSON} қоңырау шалды: карта {CARD} заблокирована, просит перезвонить на {PHONE}.
+
+  it_incident:
+    - >-
+      Коллеги, GitLab токені репозиторийге түсіп кетіпті: {SECRET:gitlab_token}.
+      Токенді отозвать еттік, пайплайндар перезапущены.
+    - >-
+      Staging конфигінде строка подключения ашық тұр: {SECRET:connection_string}.
+      Парольді ауыстырдық.
+    - >-
+      Пользователь заявкаға VPN паролін жазып жіберген — пароль: {SECRET:password}.
+      Учётканы сбросить еттік.
+    - >-
+      Логта Authorization: Bearer {SECRET:bearer_token} ашық жазылып жатыр, маскировка
+      қосу керек.
+    - >-
+      .env файлы коммитке кетіп қалған: OPENAI_API_KEY={SECRET:openai_api_key}. Ключ отозван,
+      коммит {git_sha} тарихтан өшірілді.
+    - >-
+      Логтарда клиенттердің ИИН-і көрініп тұр, мысалы {IIN}. Ответственный — {PERSON},
+      {EMAIL}.
+    - >-
+      Slack-бот токені скриншотқа түсіп қалған: {SECRET:slack_token}. Перевыпустили,
+      скриншотты өшірдік.
+    # A name that opens a sentence, with no word for a person next to it: where a capital
+    # letter says nothing, and a surname without an ending says nothing either.
+    - >-
+      Жаңа тикет № {order_no}. {PERSON} пишет, что VPN қосылмай тұр, почтасы {EMAIL}.

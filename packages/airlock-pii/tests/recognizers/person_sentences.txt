@@ -1,0 +1,231 @@
+# Handwritten sentences for the name recognizers, with the names marked. Every name is made
+# up: common given names put together with common surnames, and no one in particular.
+#
+# One sentence per line:   language | tags | text
+#
+#   [[name]]   a name the rules find, exactly these characters, with the NER off
+#   {{name}}   a name the rules do not find: they have too little to go on. It counts as a
+#              miss of the rules. The NER finds it, unless the sentence is tagged ner-miss.
+#
+# A Kazakh case suffix stays outside the brackets: the name in "Айгерімге" is "Айгерім".
+# {NBSP} stands for a no-break space and {BREVE} for a combining breve, which no file of
+# this project may hold as themselves.
+#
+# Languages: ru, kk (Cyrillic), kk-latn, mixed, en. Tags say what a sentence is there for;
+# test_names_in_sentences.py counts them, so that no kind of case is dropped by accident.
+#   excl:<word>   a street, place or company word next to a name that is no person
+#   heldout       a name that the gazetteer does not know, on purpose (HELD_OUT in the tests)
+#   beyond        the sentence has a name in {{ }}
+#   ner-miss      the NER does not find that name either
+#   none          the sentence has no name at all
+
+# --- Russian: whole names --------------------------------------------------------------------
+ru | full | Кредитный комитет одобрил заявку: заёмщик [[Айгерім Ахметова]], сумма 500 000 тенге.
+ru | full | Клиент [[Нұрлан Сәкенұлы Жұмабаев]] просит отозвать перевод.
+ru | full | [[Ахметова Айгерім Нұрланқызы]] подала заявление на отпуск.
+ru | full | Договор подписал директор [[Иванов Сергей Петрович]].
+ru | full | Получатель: [[Смирнова Ольга]].
+ru | full | Вчера звонил [[Нурлан Жумабаев]], перезвоните ему.
+ru | full | Ответственный — [[Олег Ким]].
+ru | full | Клиент [[Цой Виктория Олеговна]] сменила номер.
+ru | full,sole-proprietor | Платёж от ИП [[Ахметов Нұрлан]] поступил вчера.
+ru | full | В заявке указаны [[Дмитрий Соколов]] и [[Мадина Оспанова]].
+ru | full | Попросите [[Нұрлан Ахметов]] продиктовать номер ещё раз.
+
+# --- Russian: case forms ---------------------------------------------------------------------
+ru | declined | Прошу оформить пропуск для [[Марии Кузнецовой]].
+ru | declined | Сообщите [[Ивану Петровичу Смирнову]], что документы готовы.
+ru | declined | Заявление от [[Петровой Анны Сергеевны]] принято.
+ru | declined | С [[Нурланом Сакеновичем]] согласовано.
+ru | declined | Счёт открыт на имя [[Айгерим Ахметовой]].
+ru | declined | Письмо для клиента [[Петровой]] отправлено.
+ru | declined | Передайте документы [[Нурлану]] сегодня.
+ru | declined | Вчера говорили с [[Игорем Васильевым]] о продлении.
+ru | declined | Заявление от [[Петровой]] принято.
+ru | declined | Переведите деньги [[Кожемякину]] до пятницы.
+
+# --- Russian: a word for a person, a form of address, a name alone ---------------------------
+ru | person-word | Гражданин [[Кожемякин]] явился на приём.
+ru | honorific | Уважаемый [[Нурлан Сакенович]]! Ваша заявка одобрена.
+ru | honorific,single | Уважаемая [[Айгерим]], добрый день!
+ru | honorific | Письмо для г-на [[Ахметова]] готово.
+ru | single | [[Айгерим]], добрый день! Подскажите статус заявки.
+ru | single | Отчёт подготовила [[Динара]].
+ru | single,ordinary | [[Арман]], добрый день! Когда будет готов договор?
+ru | single,ordinary | Вчера приходил [[Мақсат]], оставил документы.
+
+# --- Russian: names the gazetteer does not know ----------------------------------------------
+ru | heldout | Заявку оставил [[Жолдасбек Ахметов]].
+ru | heldout | Бухгалтер [[Есенгелді Сәкенұлы]] в отпуске до понедельника.
+ru | heldout | На приём записана [[Ұлпан Сейітқалиқызы]].
+ru | heldout,beyond | Сегодня дежурит {{Қуандық}}.
+ru | beyond | Поручитель — {{Ханс Шмидт}}, гражданин Германии.
+ru | beyond | Вчера приходил {{Шмидт}}, спрашивал про договор.
+
+# --- Russian: initials -----------------------------------------------------------------------
+ru | initials | Договор подписал [[Иванов И.И.]]
+ru | initials | Исполнитель: [[А. С. Смирнова]], телефон в подписи.
+ru | initials | Согласовано: [[Жұмабаев Н.С.]], [[Ахметова А.Н.]]
+ru | initials | [[Ким А.В.]] в командировке.
+ru | initials | Приказ подписал [[Н. Жұмабаев]].
+ru | initials,heldout | Заявление от [[Сейітқали Ө.Т.]] зарегистрировано.
+ru | initials | Исполнитель: [[А.{NBSP}С.{NBSP}Смирнова]].
+ru | initials,none | Условия изложены в Приложении А. Договор вступает в силу с даты подписания.
+
+# --- Russian: capitals -----------------------------------------------------------------------
+ru | caps | ЗАЯВЛЕНИЕ. Я, [[АХМЕТОВА АЙГЕРІМ НҰРЛАНҚЫЗЫ]], прошу предоставить отпуск.
+ru | caps | ФИО: [[ИВАНОВ СЕРГЕЙ ПЕТРОВИЧ]]
+ru | caps,none | ДОГОВОР БАНКОВСКОГО ЗАЙМА № 15
+ru | caps,none | ПЕРЕЧЕНЬ ДОКУМЕНТОВ КЛИЕНТА
+
+# --- Russian: not a person -------------------------------------------------------------------
+ru | none,excl:улица | Офис находится по адресу: улица Абая, 10.
+ru | none,excl:ул. | Встреча на ул. Ахмета Байтурсынова, 90.
+ru | none,excl:проспект | Филиал на проспекте Абая открыт до шести.
+ru | none,excl:пр. | Доставка по адресу пр. Абая, 5, офис 12.
+ru | none,excl:микрорайон | Склад в микрорайоне Самал, дом 3.
+ru | none,excl:мкр. | Офис в мкр. Жулдыз, дом 7.
+ru | none,excl:ТОО | Договор с ТОО «Нұрлан Сауда» подписан.
+ru | none,excl:АО | Поставщик — АО «Айгерим Трейд».
+ru | none,excl:ТОО | Счёт выставлен ТОО Айгерим за март.
+ru | none,excl:city | Командировка в Алматы согласована.
+ru | none,excl:city | Переезд из Караганды в Астану завершён.
+ru | none,excl:place | В городе Абай открыли отделение.
+ru | none,ordinary | Вера в успех помогла команде.
+ru | none,ordinary | Надежда на быстрый ответ не оправдалась.
+ru | none,ordinary | Тема письма: отчёт за квартал.
+ru | none,ordinary | Роман с продолжением вышел в печать.
+ru | none | Добрый день! Прошу проверить статус заявки.
+ru | none | Заёмщик не вышел на связь.
+ru | none | Перевыпустили карту и отправили курьером.
+ru | none | Андеррайтер запросил справку о доходах.
+ru | none | Страховка оформлена на год.
+ru | none | Командировка продлена до пятницы.
+ru | none | Магазин работает до девяти.
+ru | none | Один из клиентов отказался от услуги.
+ru | none | Документов недостаточно для выдачи кредита.
+ru | none | В Министерстве юстиции Республики Казахстан подтвердили регистрацию.
+ru | none | Национальный Банк Казахстана повысил ставку.
+ru | none | Исполнитель обязуется передать Заказчику отчёт.
+ru | none | Каспийский Трубопроводный Консорциум подтвердил оплату.
+ru | none | Вчера Отдел Кадров прислал новый график.
+
+# --- Russian: other ways to write a Kazakh name ----------------------------------------------
+# The first name below has a Latin "i" where Kazakh has "і".
+ru | substitutes | Клиент [[Айгерiм Ахметова]] подала заявку.
+ru | substitutes | Заёмщик [[Гаухар Кенжебаева]] не вышла на связь.
+ru | substitutes | Сотрудник [[Асель Нургалиева]] в отпуске.
+ru | substitutes | [[Ляззат Сулейменова]] вышла на связь.
+ru | substitutes | Клиент [[Сергеи{BREVE} Иванов]] подал заявку.
+
+# --- Kazakh ----------------------------------------------------------------------------------
+kk | full | Қарыз алушы [[Айгерім Ахметова]] өтінім берді.
+kk | full | Клиент [[Нұрлан Сәкенұлы]] аударымды кері қайтаруды сұрайды.
+kk | full | Бас бухгалтер [[Ілияс Ғабитұлы Қасымов]] қол қойды.
+kk | full | Жаңа қызметкер — [[Іңкәр Сәрсенбаева]].
+kk | full | [[Үміт Қанатқызы]] бүгін жұмыста жоқ.
+kk | full,sole-proprietor | Төлем ЖК [[Ахметов Нұрлан]] атынан түсті.
+kk | full | Шартқа [[Данияр Сәкен ұлы]] қол қойды.
+kk | honorific | Құрметті [[Ұлан Өркенұлы]], өтініміңіз мақұлданды.
+kk | honorific,single | [[Айгерім]] ханым, өтінішіңіз қаралды.
+kk | honorific | [[Ахметов]] мырза ертең келеді.
+kk | single | Кеше [[Данияр]] қоңырау шалды.
+kk | single,ordinary | [[Мақсат]], сәлем! Есепті жібере аласың ба?
+kk | declined | Құжаттарды [[Айгерім]]ге жіберіңіз.
+kk | declined | Бұл хатты [[Нұрлан Жұмабаев]]қа табыстаңыз.
+kk | declined | [[Ахметова Айгерім Нұрланқызы]]ның өтініші қабылданды.
+kk | declined | Кеше [[Серік]]пен сөйлестім.
+kk | declined | Есепті [[Әсел]]ден сұраңыз.
+kk | declined | Бұйрықпен [[Сәкен Нұрланұлы]]н таныстыру керек.
+kk | heldout | Өтінішті [[Ақбота Ахметова]] жазды.
+kk | heldout | Жаңа маман — [[Еңлік Сәкенқызы]].
+kk | heldout,beyond | Бүгін {{Тұмар}} кезекшілікте.
+kk | caps | ТЕГІ, АТЫ: [[ЖҰМАБАЕВ НҰРЛАН]]
+kk | none,excl:көшесі | Кеңсе Абай көшесі, 10 мекенжайында орналасқан.
+kk | none,excl:көшесі | Бөлімше Сәкен Сейфуллин көшесінде орналасқан.
+kk | none,excl:даңғылы | Абай даңғылы бойында жөндеу жүріп жатыр.
+kk | none,excl:даңғылы | Абылай хан даңғылы уақытша жабық.
+kk | none,excl:даңғылы | Бөлімше Бауыржан Момышұлы даңғылында.
+kk | none,excl:шағын аудан | Жеткізу Самал шағын ауданына жасалады.
+kk | none,excl:ЖШС | Шарт «Нұрлан Сауда» ЖШС-мен жасалды.
+kk | none,excl:АҚ | Жеткізуші — «Айгерім Трейд» АҚ.
+kk | none,excl:city | Іссапар Алматыға бекітілді.
+kk | none,excl:city | Бөлім Қарағандыдан Астанаға көшті.
+kk | none,excl:place | Абай қаласында жаңа бөлімше ашылды.
+kk | none,ordinary | Мақсат айқын: несиені мерзімінен бұрын өтеу.
+kk | none,ordinary | Еркін нысанда өтініш жазыңыз.
+kk | none,ordinary | Берік шешім қабылданды.
+kk | none,ordinary | Төлеу мерзімі өтіп кетті.
+kk | none,ordinary | Қуат көзі ажыратылды.
+kk | none,ordinary | Сапар шығындары өтелді.
+kk | none | Несие комитеті өтінімді мақұлдады.
+kk | none | Жалақы картаға аударылды.
+kk | none | Төлем кері қайтарылды.
+kk | none | Алушы банкі аударымды растады.
+kk | none | Бүгін кеңсе сағат алтыға дейін жұмыс істейді.
+kk | none | Қайырлы күн! Өтінімнің мәртебесін тексеріп беріңізші.
+kk | none | Осы Шарт екі данада жасалды.
+
+# --- The seven given names that begin with a Kazakh letter -----------------------------------
+ru | seven | Клиент [[Әсел Ғалымқызы]] подала заявку.
+kk | seven | [[Ғалым Сәкенұлы]] қол қойды.
+ru | seven,ordinary | Вчера звонил [[Қанат]], просил перезвонить.
+ru | seven | [[Өркен Ахметов]] в отпуске до пятницы.
+kk | seven,declined | Хатты [[Ұлан]]ға жіберіңіз.
+ru | seven,ordinary | [[Үміт]], добрый день! Договор готов.
+kk | seven | Өтінімді [[Ілияс]] берді.
+
+# --- Kazakh in Latin letters -----------------------------------------------------------------
+kk-latn | full | Qaryz alushy [[Aigerim Akhmetova]] otinim berdi.
+kk-latn | full | Klient [[Nurlan Zhumabayev]] audarymdy qaitarudy suraidy.
+kk-latn | full | [[Asel Galymkyzy]] demalysta.
+kk-latn | full | Zhana qyzmetker — [[Dauren Sakenuly]].
+kk-latn | full | Tolem [[Qairat Qasymov]] atynan tusti.
+kk-latn | single | [[Aigerim]], salem! Esepti jibere alasyn ba?
+kk-latn | declined,beyond,ner-miss | Qujattardy {{Aigerim}}ge jiberiniz.
+kk-latn | none | Tolem merzimi otip ketti.
+
+# --- English ---------------------------------------------------------------------------------
+en | full | The borrower is [[Aigerim Akhmetova]], and the co-borrower is [[Nurlan Zhumabayev]].
+en | full | Cardholder: [[Sergey Ivanov]].
+en | full | The request was filed by [[Akhmetova Aigerim Nurlankyzy]] on Monday.
+en | honorific | Please call Mr [[Akhmetov]] tomorrow.
+en | honorific,single | Dear [[Aigerim]], your application has been approved.
+en | beyond,ner-miss | The meeting with {{John Smith}} is on Monday.
+en | none | Please transfer the amount by Monday.
+en | none | Hello! Please check the status of the application.
+en | none | The Admin Login page is down.
+en | none,ordinary | The Roman numerals are on page two.
+en | none,ordinary | Mark the invoice as paid.
+en | none,excl:city | Send the report to Astana by Friday.
+
+# --- Russian and Kazakh in one text ----------------------------------------------------------
+mixed | full | Сәлем, коллеги! Клиент [[Айгерім Ахметова]] бүгін кредитке заявка қалдырды.
+mixed | full | Қайырлы күн! Заёмщик — [[Нұрлан Жұмабаев]], документы жібердім.
+mixed | full | Директорға айттым, [[Сәкен Нұрланұлы]] согласен.
+mixed | single | Рахмет, [[Айгерим]]! Договорды ертең жіберемін.
+mixed | honorific,single | [[Марат]] аға, отчёт дайын ба?
+mixed | declined | Приказбен [[Айгерім Ахметова]]ны таныстыру керек.
+mixed | none | Сәлем! Отчётты бүгін жіберемін, рахмет.
+
+# --- Names, round 2: a surname with no ending, and a surname alone ---------------------------
+# A surname in the Kazakh style is an ancestor's name. Next to a given name it is found in
+# either order, at the start of a sentence too. A surname with an ending is found alone in
+# the middle of a sentence; at the start of one, and with a weak ending, it is still beyond
+# the rules.
+kk | full,ordinary | [[Мақсат Сейтқали]] жазды, жауап күтіп отыр.
+kk | full,ordinary | [[Азамат Әбдірахман]] кеше келді.
+kk | full | [[Сейтқали Айгүл]] ертең келеді.
+kk | full,ordinary | [[Сейтқали Мақсат]] өтініш берді.
+kk | full | Анықтама [[Нұрлан Көшербай]] атына берілді.
+kk | full | Бүгін хатты [[Жұмабай Айгерім]]ге жібердім.
+ru | single,ordinary | Сегодня [[Мақсат]] пришёл раньше всех.
+ru | declined | Вчера получили письмо от [[Смирновой]].
+ru | declined | На встрече были [[Иванов]], [[Петров]] и [[Сидоров]].
+ru | beyond | {{Петрова}} подала заявление вчера.
+ru | beyond | {{Кожемякин}} просит перенести встречу на вторник.
+ru | declined,beyond | Письмо для {{Ковалевского}} готово.
+ru | none | Летим в Ростов завтра, вернёмся в пятницу.
+ru | none | Письмо из Министерства Финансов пришло утром.
+kk | none | Мақсат Банк ашты.
+kk | none | Мен кеше Директордин тапсырмасын орындадым.

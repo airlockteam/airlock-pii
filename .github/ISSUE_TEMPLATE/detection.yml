@@ -1,0 +1,51 @@
+name: Something is detected wrongly
+description: A value that is missed, or a text that is flagged and should not be
+labels: ["detection"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Synthetic data only.** Do not paste a real IIN, name, phone number, card, account,
+        e-mail address or key, yours or anyone's: this page is public. Make values with
+        `airlock_pii.synthetic` (for example
+        `python -c "import random; from airlock_pii import synthetic; print(synthetic.iin(random.Random(1)))"`)
+        and change real names to common ones.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What happens
+      options:
+        - A value is not found
+        - Something is found that is no such value
+        - The span or the type is wrong
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: A text that shows it, with made-up values
+      description: The shortest text you can make. Keep the words around the value as they were.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: What detect() returns for it, and what you expected
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version of airlock-pii, and the extras that are installed
+      placeholder: "0.1.0, ner-ru"
+    validations:
+      required: true
+  - type: checkboxes
+    id: synthetic
+    attributes:
+      label: Synthetic data
+      options:
+        - label: Nothing in this issue is real personal data or a real secret.
+          required: true
