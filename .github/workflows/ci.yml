@@ -37,8 +37,13 @@ jobs:
           cache-suffix: python-${{ matrix.python }}
 
       # Three locks: the workspace's, and those of the two projects that hold Presidio, which
-      # are projects of their own so that its packages stay out of the first.
+      # are projects of their own so that its packages stay out of the first. A lock is the
+      # same whatever the interpreter, but uv still asks for one that the project accepts, and
+      # the Presidio baselines need 3.12 or later. So this step runs on the Python of
+      # .python-version in every job, and not on the job's.
       - name: Lockfiles are up to date
+        env:
+          UV_PYTHON: "3.12"
         run: |
           uv lock --check
           uv lock --check --project bench/presidio

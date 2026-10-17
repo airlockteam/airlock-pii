@@ -179,9 +179,18 @@ def test_a_tagged_name_is_reported(
         "<Перевыпустили> карту вчера.",
         # A given name that is also a word, where nothing says a person is meant.
         "<Мақсат> айқын: несиені өтеу.",
+        # The same after a sentence in quotes or brackets that ends in its own full stop.
+        "Хат жобасы: «Шартқа қол қою үшін бөлімшеге келуіңізді сұраймыз.» <Ішкі> карточкаға.",
+        "Он написал: «Настройки сохранены.» <Авиарежим> включится сам.",
+        "(См. приложение.) <Перевыпустили> карту вчера.",
         # What is known to be no name.
         "<Заёмщик> не вышел на связь.",
         "Отчёт для <Заказчика> готов.",
+        # The polite pronoun, in any of its cases.
+        "Этот человек делится с <Вами> своей геопозицией.",
+        "<Заработанные Вами> бонусы начисляются на счёт.",
+        "Хотите поделиться <Вашей>?",
+        "Спасибо <Вашим> коллегам за помощь.",
         "Командировка в <Алматы> согласована.",
         "Бөлім <Қарағандыдан> көшті.",
         # Streets and companies.
@@ -282,6 +291,12 @@ def test_where_the_rules_find_such_a_word_it_is_found_with_the_ner_on(
         ("<Кожемякин> явился на приём.", [("Кожемякин", 0.7)]),
         ("<Айгерім> келді.", [("Айгерім", 0.7)]),
         ("<Мақсат>, сәлем! Есеп дайын ба?", [("Мақсат", 0.7)]),
+        # The same after a sentence in quotes that ends in its own full stop, and two words.
+        ("Хат: «Құжат дайын.» <Айгерім> келді.", [("Айгерім", 0.7)]),
+        ("Он написал: «Готово.» <Кожемякин> явился на приём.", [("Кожемякин", 0.7)]),
+        ("Он написал: «Готово.» <Ханс Шмидт> позвонил утром.", [("Ханс Шмидт", 0.8)]),
+        # A closing quote without a full stop ends no sentence: a word after it is inside one.
+        ("Слово «вклад» <Шмидт> понял не так.", [("Шмидт", 0.7)]),
     ],
 )
 def test_a_tagged_span_is_cut_to_the_name_in_it(
@@ -363,6 +378,15 @@ def test_the_words_of_these_tests_are_what_the_tests_take_them_for() -> None:
         assert (found.kind, found.no_surname) == (Kind.UNKNOWN, True), word
         assert found.verb == (word == "Разыщите")
     for word in ("Алимент", "Клиент", "Директор"):
+        (found,) = next(runs(word))
+        assert found.kind is Kind.STOP, word
+    # The word after the quoted sentence is dropped because it opens a sentence, and for no
+    # other reason.
+    for word in ("Ішкі", "Авиарежим", "Перевыпустили"):
+        (found,) = next(runs(word))
+        assert (found.kind, found.name_like) == (Kind.UNKNOWN, False), word
+    # Every case of the polite pronoun is on the list of what is no name.
+    for word in ("Вами", "Вашего", "Вашей", "Вашем", "Вашему", "Вашим", "Вашими", "Ваших", "Вашу"):
         (found,) = next(runs(word))
         assert found.kind is Kind.STOP, word
 
@@ -746,6 +770,26 @@ def test_the_model_finds_what_the_rules_cannot(ner_recognizer: RuNerRecognizer) 
         assert names_found(ner_recognizer, text) == [name]
         rules = Engine(default_recognizers(ner="off"))
         assert rules.detect(text, types=PERSON) == []
+
+
+@pytest.mark.ner
+def test_what_the_model_tags_after_a_quoted_sentence_or_in_a_pronoun_is_not_reported(
+    ner_recognizer: RuNerRecognizer,
+) -> None:
+    # The letter of the leak test's conversations: the model tags «Ішкі» ("internal"), the word
+    # that opens the sentence after the closing quote, and the name after it.
+    letter = (
+        "Хат жобасы: «Құрметті клиент! Сіздің өтініміңіз 500 000 теңге сомасына мақұлданғанын "
+        "хабарлаймыз. Шартқа қол қою үшін бөлімшеге келуіңізді сұраймыз.» Ішкі карточкаға: "
+        "Полина Ковалева, байланыс нөмірі кейін. Шешімнің жарамдылық мерзімін қосайын ба?"
+    )
+    assert names_found(ner_recognizer, letter) == ["Полина Ковалева"]
+    # The polite pronoun with its capital, as interface texts write it.
+    for text in (
+        "Этот человек делится с Вами своей геопозицией.",
+        "Введите номер телефона, по которому с Вами можно будет связаться.",
+    ):
+        assert names_found(ner_recognizer, text) == []
 
 
 @pytest.mark.ner

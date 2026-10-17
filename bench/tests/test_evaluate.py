@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from collections.abc import Sequence
@@ -12,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from airlock_pii import EntityType, detect
+from airlock_pii import EntityType
 from airlock_pii.engine import Engine
 from airlock_pii.models import MODELS_DIR_VARIABLE, ModelError
 from airlock_pii.recognizers import NER_VARIABLE, default_recognizers
@@ -128,13 +129,45 @@ def test_the_library_is_run_without_the_ner_whatever_the_environment_says(
     monkeypatch.setenv(NER_VARIABLE, "ru")
     monkeypatch.setenv(MODELS_DIR_VARIABLE, str(tmp_path))  # an empty directory: no model
     detector = evaluate.load_detector("airlock_pii")
-    for sample in samples[:50]:
-        assert detector(sample.text) == [
-            (str(entity.type), entity.start, entity.end) for entity in rules.detect(sample.text)
+    texts = [sample.text for sample in samples[:50]]
+    for text in texts:
+        assert detector(text) == [
+            (str(entity.type), entity.start, entity.end) for entity in rules.detect(text)
         ]
-        assert detector(sample.text) == [
-            (str(entity.type), entity.start, entity.end) for entity in detect(sample.text)
-        ]
+    # And it is detect() as it comes, where nothing switches the NER on.
+    assert [detector(text) for text in texts] == detect_without_the_variables(texts)
+
+
+def detect_without_the_variables(texts: list[str]) -> list[list[tuple[str, int, int]]]:
+    """What ``detect()`` finds in a process whose environment does not name the NER.
+
+    ``detect()`` builds its engine once, when the package is imported, from the environment
+    of that moment: in this process it has the NER if ``AIRLOCK_PII_NER=ru`` was set before
+    pytest started, whatever a test sets afterwards.
+    """
+    environment = {
+        name: value
+        for name, value in os.environ.items()
+        if name not in (NER_VARIABLE, MODELS_DIR_VARIABLE)
+    }
+    program = (
+        "import json, sys\n"
+        "from airlock_pii import detect\n"
+        "texts = json.load(sys.stdin)\n"
+        "found = [[(str(e.type), e.start, e.end) for e in detect(t)] for t in texts]\n"
+        "json.dump(found, sys.stdout)\n"
+    )
+    result = subprocess.run(  # noqa: S603  (fixed arguments, no input from outside)
+        [sys.executable, "-c", program],
+        input=json.dumps(texts),
+        env=environment,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return [
+        [(kind, start, end) for kind, start, end in found] for found in json.loads(result.stdout)
+    ]
 
 
 def test_the_ner_detector_fails_without_its_model_files(

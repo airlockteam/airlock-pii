@@ -568,6 +568,29 @@ def test_the_start_of_a_sentence() -> None:
         assert not _names.at_sentence_start(text, text.index("Арман")), text
 
 
+def test_a_sentence_ends_inside_a_closing_quote_or_bracket_too() -> None:
+    # The letter that a chat drafts ends in its own full stop, and the closing quote follows:
+    # "...сұраймыз.» Ішкі карточкаға".
+    for text in (
+        "«Құжат дайын.» Арман",
+        "Хат: «Келіңіз!» Арман",
+        "«Дайын ба?» Арман",
+        "«Күтеміз…» Арман",
+        '"Готово." Арман',
+        "“Готово.” Арман",
+        "„Готово.“ Арман",
+        "‘Готово.’ Арман",
+        "(См. приложение.) Арман",
+        "[Готово.] Арман",
+        "«Готово.»)\nАрман",
+        "«Готово.») Арман",
+    ):
+        assert _names.at_sentence_start(text, text.index("Арман")), text
+    # A closing quote or bracket without a full stop before it ends no sentence.
+    for text in ("ТОО «Арна» Арман", "Слово «вклад» Арман", '"Арна" Арман', "(справка) Арман"):
+        assert not _names.at_sentence_start(text, text.index("Арман")), text
+
+
 @pytest.mark.parametrize(
     "text",
     [

@@ -420,8 +420,10 @@ _HONORIFIC_BEFORE = re.compile(rf"(?<!\w)(?i:{_stems(_CONTEXT['honorific'])}){_B
 _HONORIFIC_AFTER = re.compile(rf"{_BLANK}+(?i:{_context_words(_CONTEXT['honorific-after'])})(?!\w)")
 _GREETING_BEFORE = re.compile(rf"(?<!\w)(?i:{_stems(_CONTEXT['greeting'])})\W{{0,3}}\Z")
 _GREETING_AFTER = re.compile(rf"\W{{0,3}}(?i:{_stems(_CONTEXT['greeting'])})(?!\w)")
-# The start of the text, or the end of a sentence, and then nothing but what opens a line.
-_SENTENCE_START = re.compile(r"(?:\A|[.!?…]\s+|\n)[\s«\"“„(\[*•–—-]*(?:\d+[.)]\s+)?\Z")
+# The start of the text, or the end of a sentence, and then nothing but what opens a line. A
+# sentence also ends inside a closing quote or bracket: a letter that a chat drafts ends in its
+# own full stop ("...сұраймыз.» Ішкі карточкаға").
+_SENTENCE_START = re.compile(r"(?:\A|[.!?…][»\"”“’)\]]*\s+|\n)[\s«\"“„(\[*•–—-]*(?:\d+[.)]\s+)?\Z")
 # The word right before a place of the text, on its line: its letters, the comma after it if
 # there is one, and the dash between if there is one. It begins where a word begins and gives
 # nothing back, so a search costs one try for each word it looks back over.
