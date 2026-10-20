@@ -1,0 +1,860 @@
+{
+  "detector": "naive_regex",
+  "date": "2026-10-18",
+  "data": {
+    "file": "v1.jsonl",
+    "sha256": "3e003c8ec12a2b427fa8aede333eee961c2284acf22b5a9076355f94873625c5",
+    "samples": 2000,
+    "negatives": 400,
+    "variants": {
+      "plain": 1623,
+      "caps": 167,
+      "noise": 210
+    }
+  },
+  "environment": {
+    "python": "3.12.12",
+    "platform": "macOS-14.8.1-arm64-arm-64bit",
+    "airlock_pii": "0.1.0"
+  },
+  "detector_info": null,
+  "exact": {
+    "types": {
+      "PERSON": {
+        "gold": 1304,
+        "found": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1304,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "IIN": {
+        "gold": 528,
+        "found": 756,
+        "tp": 491,
+        "fp": 265,
+        "fn": 37,
+        "precision": 0.6494708994708994,
+        "recall": 0.9299242424242424,
+        "f1": 0.764797507788162
+      },
+      "BIN": {
+        "gold": 145,
+        "found": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 145,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "KZ_IBAN": {
+        "gold": 348,
+        "found": 194,
+        "tp": 194,
+        "fp": 0,
+        "fn": 154,
+        "precision": 1.0,
+        "recall": 0.5574712643678161,
+        "f1": 0.7158671586715867
+      },
+      "CARD": {
+        "gold": 248,
+        "found": 258,
+        "tp": 222,
+        "fp": 36,
+        "fn": 26,
+        "precision": 0.8604651162790697,
+        "recall": 0.8951612903225806,
+        "f1": 0.8774703557312253
+      },
+      "PHONE": {
+        "gold": 424,
+        "found": 427,
+        "tp": 409,
+        "fp": 18,
+        "fn": 15,
+        "precision": 0.9578454332552693,
+        "recall": 0.964622641509434,
+        "f1": 0.9612220916568742
+      },
+      "EMAIL": {
+        "gold": 290,
+        "found": 313,
+        "tp": 286,
+        "fp": 27,
+        "fn": 4,
+        "precision": 0.9137380191693291,
+        "recall": 0.9862068965517241,
+        "f1": 0.9485903814262023
+      },
+      "SECRET": {
+        "gold": 164,
+        "found": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 164,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "micro": {
+      "gold": 3451,
+      "found": 1948,
+      "tp": 1602,
+      "fp": 346,
+      "fn": 1849,
+      "precision": 0.8223819301848049,
+      "recall": 0.46421327151550273,
+      "f1": 0.59344323022782
+    },
+    "macro": {
+      "precision": 0.8763038936349135,
+      "recall": 0.5416732918969747,
+      "f1": 0.5334934369092563
+    }
+  },
+  "overlap": {
+    "types": {
+      "PERSON": {
+        "gold": 1304,
+        "found": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1304,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "IIN": {
+        "gold": 528,
+        "found": 756,
+        "tp": 491,
+        "fp": 265,
+        "fn": 37,
+        "precision": 0.6494708994708994,
+        "recall": 0.9299242424242424,
+        "f1": 0.764797507788162
+      },
+      "BIN": {
+        "gold": 145,
+        "found": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 145,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "KZ_IBAN": {
+        "gold": 348,
+        "found": 194,
+        "tp": 194,
+        "fp": 0,
+        "fn": 154,
+        "precision": 1.0,
+        "recall": 0.5574712643678161,
+        "f1": 0.7158671586715867
+      },
+      "CARD": {
+        "gold": 248,
+        "found": 258,
+        "tp": 222,
+        "fp": 36,
+        "fn": 26,
+        "precision": 0.8604651162790697,
+        "recall": 0.8951612903225806,
+        "f1": 0.8774703557312253
+      },
+      "PHONE": {
+        "gold": 424,
+        "found": 427,
+        "tp": 409,
+        "fp": 18,
+        "fn": 15,
+        "precision": 0.9578454332552693,
+        "recall": 0.964622641509434,
+        "f1": 0.9612220916568742
+      },
+      "EMAIL": {
+        "gold": 290,
+        "found": 313,
+        "tp": 289,
+        "fp": 24,
+        "fn": 1,
+        "precision": 0.9233226837060703,
+        "recall": 0.996551724137931,
+        "f1": 0.9585406301824212
+      },
+      "SECRET": {
+        "gold": 164,
+        "found": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 164,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "micro": {
+      "gold": 3451,
+      "found": 1948,
+      "tp": 1605,
+      "fp": 343,
+      "fn": 1846,
+      "precision": 0.8239219712525667,
+      "recall": 0.46508258475804115,
+      "f1": 0.594554547138359
+    },
+    "macro": {
+      "precision": 0.8782208265422617,
+      "recall": 0.5429663953452505,
+      "f1": 0.5347372180037837
+    }
+  },
+  "covered": {
+    "types": {
+      "PERSON": {
+        "gold": 1304,
+        "covered": 0,
+        "recall": 0.0,
+        "exact": 0
+      },
+      "IIN": {
+        "gold": 528,
+        "covered": 491,
+        "recall": 0.9299242424242424,
+        "exact": 491
+      },
+      "BIN": {
+        "gold": 145,
+        "covered": 0,
+        "recall": 0.0,
+        "exact": 0
+      },
+      "KZ_IBAN": {
+        "gold": 348,
+        "covered": 194,
+        "recall": 0.5574712643678161,
+        "exact": 194
+      },
+      "CARD": {
+        "gold": 248,
+        "covered": 222,
+        "recall": 0.8951612903225806,
+        "exact": 222
+      },
+      "PHONE": {
+        "gold": 424,
+        "covered": 409,
+        "recall": 0.964622641509434,
+        "exact": 409
+      },
+      "EMAIL": {
+        "gold": 290,
+        "covered": 287,
+        "recall": 0.9896551724137931,
+        "exact": 286
+      },
+      "SECRET": {
+        "gold": 164,
+        "covered": 0,
+        "recall": 0.0,
+        "exact": 0
+      }
+    },
+    "micro": {
+      "gold": 3451,
+      "covered": 1603,
+      "recall": 0.4645030425963489
+    },
+    "macro": {
+      "recall": 0.5421043263797333
+    },
+    "names": {
+      "kazakh_surname": {
+        "gold": 110,
+        "covered": 0,
+        "recall": 0.0
+      },
+      "surname_first": {
+        "gold": 27,
+        "covered": 0,
+        "recall": 0.0
+      },
+      "surname_only": {
+        "gold": 74,
+        "covered": 0,
+        "recall": 0.0
+      },
+      "held_out": {
+        "gold": 181,
+        "covered": 0,
+        "recall": 0.0
+      },
+      "declined": {
+        "gold": 100,
+        "covered": 0,
+        "recall": 0.0
+      },
+      "opens_sentence": {
+        "gold": 146,
+        "covered": 0,
+        "recall": 0.0
+      }
+    },
+    "names_counted_over": "plain"
+  },
+  "any_type": {
+    "types": {
+      "PERSON": {
+        "gold": 1304,
+        "covered": 0,
+        "recall": 0.0
+      },
+      "IIN": {
+        "gold": 528,
+        "covered": 491,
+        "recall": 0.9299242424242424
+      },
+      "BIN": {
+        "gold": 145,
+        "covered": 135,
+        "recall": 0.9310344827586207
+      },
+      "KZ_IBAN": {
+        "gold": 348,
+        "covered": 194,
+        "recall": 0.5574712643678161
+      },
+      "CARD": {
+        "gold": 248,
+        "covered": 222,
+        "recall": 0.8951612903225806
+      },
+      "PHONE": {
+        "gold": 424,
+        "covered": 409,
+        "recall": 0.964622641509434
+      },
+      "EMAIL": {
+        "gold": 290,
+        "covered": 287,
+        "recall": 0.9896551724137931
+      },
+      "SECRET": {
+        "gold": 164,
+        "covered": 3,
+        "recall": 0.018292682926829267
+      }
+    },
+    "micro": {
+      "gold": 3451,
+      "covered": 1741,
+      "recall": 0.504491451753115
+    },
+    "macro": {
+      "recall": 0.6607702220904145
+    }
+  },
+  "slices": {
+    "plain": {
+      "types": {
+        "PERSON": {
+          "gold": 1030,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "IIN": {
+          "gold": 430,
+          "covered": 430,
+          "recall": 1.0
+        },
+        "BIN": {
+          "gold": 120,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "KZ_IBAN": {
+          "gold": 281,
+          "covered": 169,
+          "recall": 0.6014234875444839
+        },
+        "CARD": {
+          "gold": 192,
+          "covered": 192,
+          "recall": 1.0
+        },
+        "PHONE": {
+          "gold": 348,
+          "covered": 348,
+          "recall": 1.0
+        },
+        "EMAIL": {
+          "gold": 243,
+          "covered": 243,
+          "recall": 1.0
+        },
+        "SECRET": {
+          "gold": 136,
+          "covered": 0,
+          "recall": 0.0
+        }
+      },
+      "micro": {
+        "gold": 2780,
+        "covered": 1382,
+        "recall": 0.49712230215827335
+      },
+      "samples": 1623,
+      "negatives": {
+        "samples": 314,
+        "flagged": 140
+      }
+    },
+    "caps": {
+      "types": {
+        "PERSON": {
+          "gold": 119,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "IIN": {
+          "gold": 39,
+          "covered": 39,
+          "recall": 1.0
+        },
+        "BIN": {
+          "gold": 14,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "KZ_IBAN": {
+          "gold": 31,
+          "covered": 16,
+          "recall": 0.5161290322580645
+        },
+        "CARD": {
+          "gold": 21,
+          "covered": 21,
+          "recall": 1.0
+        },
+        "PHONE": {
+          "gold": 38,
+          "covered": 38,
+          "recall": 1.0
+        },
+        "EMAIL": {
+          "gold": 23,
+          "covered": 23,
+          "recall": 1.0
+        },
+        "SECRET": {
+          "gold": 13,
+          "covered": 0,
+          "recall": 0.0
+        }
+      },
+      "micro": {
+        "gold": 298,
+        "covered": 137,
+        "recall": 0.4597315436241611
+      },
+      "samples": 167,
+      "negatives": {
+        "samples": 42,
+        "flagged": 19
+      }
+    },
+    "noise": {
+      "types": {
+        "PERSON": {
+          "gold": 155,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "IIN": {
+          "gold": 59,
+          "covered": 22,
+          "recall": 0.3728813559322034
+        },
+        "BIN": {
+          "gold": 11,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "KZ_IBAN": {
+          "gold": 36,
+          "covered": 9,
+          "recall": 0.25
+        },
+        "CARD": {
+          "gold": 35,
+          "covered": 9,
+          "recall": 0.2571428571428571
+        },
+        "PHONE": {
+          "gold": 38,
+          "covered": 23,
+          "recall": 0.6052631578947368
+        },
+        "EMAIL": {
+          "gold": 24,
+          "covered": 21,
+          "recall": 0.875
+        },
+        "SECRET": {
+          "gold": 15,
+          "covered": 0,
+          "recall": 0.0
+        }
+      },
+      "micro": {
+        "gold": 373,
+        "covered": 84,
+        "recall": 0.225201072386059
+      },
+      "samples": 210,
+      "negatives": {
+        "samples": 44,
+        "flagged": 9
+      }
+    },
+    "latin_kazakh": {
+      "types": {
+        "PERSON": {
+          "gold": 90,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "IIN": {
+          "gold": 39,
+          "covered": 39,
+          "recall": 1.0
+        },
+        "BIN": {
+          "gold": 15,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "KZ_IBAN": {
+          "gold": 26,
+          "covered": 17,
+          "recall": 0.6538461538461539
+        },
+        "CARD": {
+          "gold": 16,
+          "covered": 16,
+          "recall": 1.0
+        },
+        "PHONE": {
+          "gold": 32,
+          "covered": 32,
+          "recall": 1.0
+        },
+        "EMAIL": {
+          "gold": 31,
+          "covered": 31,
+          "recall": 1.0
+        },
+        "SECRET": {
+          "gold": 17,
+          "covered": 0,
+          "recall": 0.0
+        }
+      },
+      "micro": {
+        "gold": 266,
+        "covered": 135,
+        "recall": 0.5075187969924813
+      },
+      "samples": 136,
+      "negatives": {
+        "samples": 21,
+        "flagged": 10
+      }
+    },
+    "noise_touched": {
+      "types": {
+        "PERSON": {
+          "gold": 31,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "IIN": {
+          "gold": 37,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "BIN": {
+          "gold": 10,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "KZ_IBAN": {
+          "gold": 17,
+          "covered": 2,
+          "recall": 0.11764705882352941
+        },
+        "CARD": {
+          "gold": 27,
+          "covered": 1,
+          "recall": 0.037037037037037035
+        },
+        "PHONE": {
+          "gold": 17,
+          "covered": 2,
+          "recall": 0.11764705882352941
+        },
+        "EMAIL": {
+          "gold": 13,
+          "covered": 10,
+          "recall": 0.7692307692307693
+        },
+        "SECRET": {
+          "gold": 9,
+          "covered": 0,
+          "recall": 0.0
+        }
+      },
+      "micro": {
+        "gold": 161,
+        "covered": 15,
+        "recall": 0.09316770186335403
+      }
+    },
+    "noise_untouched": {
+      "types": {
+        "PERSON": {
+          "gold": 124,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "IIN": {
+          "gold": 22,
+          "covered": 22,
+          "recall": 1.0
+        },
+        "BIN": {
+          "gold": 1,
+          "covered": 0,
+          "recall": 0.0
+        },
+        "KZ_IBAN": {
+          "gold": 19,
+          "covered": 7,
+          "recall": 0.3684210526315789
+        },
+        "CARD": {
+          "gold": 8,
+          "covered": 8,
+          "recall": 1.0
+        },
+        "PHONE": {
+          "gold": 21,
+          "covered": 21,
+          "recall": 1.0
+        },
+        "EMAIL": {
+          "gold": 11,
+          "covered": 11,
+          "recall": 1.0
+        },
+        "SECRET": {
+          "gold": 6,
+          "covered": 0,
+          "recall": 0.0
+        }
+      },
+      "micro": {
+        "gold": 212,
+        "covered": 69,
+        "recall": 0.32547169811320753
+      }
+    },
+    "email_test_domain": {
+      "types": {
+        "PERSON": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "IIN": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "BIN": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "KZ_IBAN": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "CARD": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "PHONE": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "EMAIL": {
+          "gold": 103,
+          "covered": 103,
+          "recall": 1.0
+        },
+        "SECRET": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        }
+      },
+      "micro": {
+        "gold": 103,
+        "covered": 103,
+        "recall": 1.0
+      }
+    },
+    "email_public_domain": {
+      "types": {
+        "PERSON": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "IIN": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "BIN": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "KZ_IBAN": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "CARD": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "PHONE": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        },
+        "EMAIL": {
+          "gold": 187,
+          "covered": 184,
+          "recall": 0.983957219251337
+        },
+        "SECRET": {
+          "gold": 0,
+          "covered": 0,
+          "recall": null
+        }
+      },
+      "micro": {
+        "gold": 187,
+        "covered": 184,
+        "recall": 0.983957219251337
+      }
+    }
+  },
+  "negatives": {
+    "samples": 400,
+    "flagged": 168,
+    "false_positive_rate": 0.42,
+    "flagged_by_type": {
+      "CARD": 29,
+      "IIN": 121,
+      "PHONE": 18
+    },
+    "with_another_type": 0
+  },
+  "latency_ms": {
+    "p50": 0.015,
+    "p95": 0.0278
+  },
+  "thresholds": {
+    "types": [
+      "IIN",
+      "BIN",
+      "KZ_IBAN",
+      "CARD",
+      "PHONE",
+      "EMAIL",
+      "SECRET"
+    ],
+    "matching": "covered",
+    "min_recall": 0.99,
+    "max_false_positive_rate": 0.01,
+    "samples": 1790,
+    "left_out": {
+      "noise": 210
+    },
+    "covered": {
+      "PERSON": {
+        "gold": 1149,
+        "covered": 0,
+        "recall": 0.0
+      },
+      "IIN": {
+        "gold": 469,
+        "covered": 469,
+        "recall": 1.0
+      },
+      "BIN": {
+        "gold": 134,
+        "covered": 0,
+        "recall": 0.0
+      },
+      "KZ_IBAN": {
+        "gold": 312,
+        "covered": 185,
+        "recall": 0.592948717948718
+      },
+      "CARD": {
+        "gold": 213,
+        "covered": 213,
+        "recall": 1.0
+      },
+      "PHONE": {
+        "gold": 386,
+        "covered": 386,
+        "recall": 1.0
+      },
+      "EMAIL": {
+        "gold": 266,
+        "covered": 266,
+        "recall": 1.0
+      },
+      "SECRET": {
+        "gold": 149,
+        "covered": 0,
+        "recall": 0.0
+      }
+    },
+    "false_positive_rate": 0.44662921348314605,
+    "failures": [
+      "BIN: recall 0.000 is below 0.99",
+      "KZ_IBAN: recall 0.593 is below 0.99",
+      "SECRET: recall 0.000 is below 0.99",
+      "false positives in 44.7% of the negatives, above 1%"
+    ]
+  }
+}

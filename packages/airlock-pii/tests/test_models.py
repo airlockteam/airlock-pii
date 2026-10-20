@@ -25,6 +25,8 @@ REPO_DIR = Path(__file__).resolve().parents[3]
 
 NER = "slovnet_ner_news_v1.tar"
 EMBEDDINGS = "navec_news_v1_1B_250K_300d_100q.tar"
+# Where the third source of each file is: the release models-v1 of the public repository.
+OUR_RELEASE = "https://github.com/airlockteam/airlock-pii/releases/download/models-v1/"
 
 CONTENT = b"the bytes of a model file that is nine lines long in a test\n" * 9
 OTHER = b"another file, of another length\n" * 5
@@ -73,9 +75,9 @@ def test_the_lock_names_the_two_files_of_the_russian_ner() -> None:
     assert all(len(file.sha256) == 64 for file in files.values())
 
 
-def test_every_file_has_two_sources_and_the_second_is_inside_an_archive() -> None:
+def test_every_file_has_three_sources_the_projects_two_and_then_ours() -> None:
     for file in models.model_files():
-        direct, in_archive = file.sources
+        direct, in_archive, ours = file.sources
         assert direct.url.startswith("https://storage.yandexcloud.net/natasha-")
         assert direct.url.endswith("/" + file.name)
         assert (direct.member, direct.size, direct.sha256) == (None, None, None)
@@ -84,6 +86,9 @@ def test_every_file_has_two_sources_and_the_second_is_inside_an_archive() -> Non
         assert (in_archive.member or "").endswith("/" + file.name)
         assert in_archive.size == 34_403_797
         assert (in_archive.sha256 or "").startswith("e12b130d05a0")
+        # The same bytes once more, as an asset of a release of the public repository.
+        assert ours.url == OUR_RELEASE + file.name
+        assert (ours.member, ours.size, ours.sha256) == (None, None, None)
 
 
 def test_the_lock_in_the_package_is_a_copy_of_the_one_at_the_root() -> None:
@@ -333,6 +338,21 @@ def test_the_second_source_is_used_when_the_first_gives_no_file(
     assert server.asked == [(DIRECT.url, len(CONTENT)), (IN_WHEEL.url, len(WHEEL))]
 
 
+def test_the_third_source_is_used_when_the_first_two_give_no_file(tmp_path: Path) -> None:
+    ours = Source("https://three.test/model.tar")
+    server = Server(
+        {DIRECT.url: OSError("unreachable"), IN_WHEEL.url: TimeoutError(), ours.url: CONTENT}
+    )
+    file = a_file("model.tar", CONTENT, DIRECT, IN_WHEEL, ours)
+    assert download(tmp_path, files=[file], fetch=server) == ["model.tar"]
+    assert (tmp_path / "model.tar").read_bytes() == CONTENT
+    assert server.asked == [
+        (DIRECT.url, len(CONTENT)),
+        (IN_WHEEL.url, len(WHEEL)),
+        (ours.url, len(CONTENT)),
+    ]
+
+
 def test_an_archive_is_fetched_once_for_all_the_files_in_it(tmp_path: Path) -> None:
     other = Source(IN_WHEEL.url, "pkg/data/other.tar", len(WHEEL), sha256(WHEEL))
     server = Server({IN_WHEEL.url: WHEEL})
@@ -544,3 +564,24 @@ def test_the_real_files_match_the_lock(models_dir: Path) -> None:
     verify(models_dir)
     for file in models.model_files():
         assert len(read_verified(models_dir, file.name)) == file.size
+
+
+@pytest.mark.ner
+def test_the_lock_gets_the_files_from_our_release_when_the_projects_sources_fail(
+    models_dir: Path, tmp_path: Path
+) -> None:
+    """The lock as it is, with the natasha project's two sources unreachable. The release is
+    stood in for by the files of ``make models``, which are the bytes of the lock."""
+    served: dict[str, bytes | Exception] = {}
+    for file in models.model_files():
+        direct, in_archive, ours = file.sources
+        served[direct.url] = OSError("unreachable")
+        served[in_archive.url] = OSError("unreachable")
+        served[ours.url] = (models_dir / file.name).read_bytes()
+    server = Server(served)
+    assert download(tmp_path, fetch=server) == [NER, EMBEDDINGS]
+    verify(tmp_path)
+    assert [url for url, _ in server.asked if url.startswith(OUR_RELEASE)] == [
+        OUR_RELEASE + NER,
+        OUR_RELEASE + EMBEDDINGS,
+    ]

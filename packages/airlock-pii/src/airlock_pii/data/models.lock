@@ -5,6 +5,8 @@
 # - The SHA-256 of a file is checked after a download and again before every load.
 # - The sources of a file are tried in the order given. The second one is the same bytes
 #   inside the natasha wheel on PyPI: the wheel is read as an archive and never installed.
+#   The third is ours: the same bytes again, as assets of the release models-v1 of the
+#   public repository, airlockteam/airlock-pii.
 #
 # packages/airlock-pii/src/airlock_pii/data/models.lock is a copy of this file, because the
 # wheel has to carry the hashes. A test keeps the two identical.
@@ -23,6 +25,9 @@ size = 34403797
 sha256 = "e12b130d05a0b4d2eb6442092ed5b5769a68a311c17f2095b1aa739fb8d6dc78"
 member = "natasha/data/model/slovnet_ner_news_v1.tar"
 
+[[file.source]]
+url = "https://github.com/airlockteam/airlock-pii/releases/download/models-v1/slovnet_ner_news_v1.tar"
+
 [[file]]
 name = "navec_news_v1_1B_250K_300d_100q.tar"
 size = 26634240
@@ -36,3 +41,6 @@ url = "https://files.pythonhosted.org/packages/32/9c/bb9d33c13564bcc939bb727087e
 size = 34403797
 sha256 = "e12b130d05a0b4d2eb6442092ed5b5769a68a311c17f2095b1aa739fb8d6dc78"
 member = "natasha/data/emb/navec_news_v1_1B_250K_300d_100q.tar"
+
+[[file.source]]
+url = "https://github.com/airlockteam/airlock-pii/releases/download/models-v1/navec_news_v1_1B_250K_300d_100q.tar"

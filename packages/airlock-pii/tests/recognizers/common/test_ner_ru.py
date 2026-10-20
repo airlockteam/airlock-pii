@@ -173,9 +173,8 @@ def test_a_tagged_name_is_reported(
     "marked",
     [
         # The word that opens a sentence, when neither the lists nor its ending make it a name.
-        "<Несие> комитеті өтінімді мақұлдады.",
-        "<Андеррайтер> запросил справку.",
-        "Шарт жасалды. <Жалақы> аударылды.",
+        "<Кепілдік> мерзімі ұзартылды.",
+        "Шарт жасалды. <Сыйақы> аударылды.",
         "<Перевыпустили> карту вчера.",
         # A given name that is also a word, where nothing says a person is meant.
         "<Мақсат> айқын: несиені өтеу.",
@@ -184,6 +183,9 @@ def test_a_tagged_name_is_reported(
         "Он написал: «Настройки сохранены.» <Авиарежим> включится сам.",
         "(См. приложение.) <Перевыпустили> карту вчера.",
         # What is known to be no name.
+        "<Несие> комитеті өтінімді мақұлдады.",
+        "<Андеррайтер> запросил справку.",
+        "Шарт жасалды. <Жалақы> аударылды.",
         "<Заёмщик> не вышел на связь.",
         "Отчёт для <Заказчика> готов.",
         # The polite pronoun, in any of its cases.
@@ -377,12 +379,12 @@ def test_the_words_of_these_tests_are_what_the_tests_take_them_for() -> None:
         (found,) = next(runs(word))
         assert (found.kind, found.no_surname) == (Kind.UNKNOWN, True), word
         assert found.verb == (word == "Разыщите")
-    for word in ("Алимент", "Клиент", "Директор"):
+    for word in ("Алимент", "Клиент", "Директор", "Несие", "Андеррайтер", "Жалақы", "Заёмщик"):
         (found,) = next(runs(word))
         assert found.kind is Kind.STOP, word
-    # The word after the quoted sentence is dropped because it opens a sentence, and for no
-    # other reason.
-    for word in ("Ішкі", "Авиарежим", "Перевыпустили"):
+    # The word that opens a sentence, also after a quoted one, is dropped for that reason and
+    # for no other.
+    for word in ("Кепілдік", "Сыйақы", "Ішкі", "Авиарежим", "Перевыпустили"):
         (found,) = next(runs(word))
         assert (found.kind, found.name_like) == (Kind.UNKNOWN, False), word
     # Every case of the polite pronoun is on the list of what is no name.

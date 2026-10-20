@@ -1,6 +1,6 @@
 # airlock-pii
 
-Built by [Airlock](https://example.com/airlock).
+Built by [Airlock](https://airlockteam.github.io).
 
 Detects Kazakhstan personal data in text: IIN and BIN, KZ IBAN, payment cards, +7 phone numbers,
 e-mail addresses and names of people, in Russian, Kazakh, mixed and English text. And secrets:
@@ -252,8 +252,9 @@ export AIRLOCK_PII_NER=ru AIRLOCK_PII_MODELS_DIR=/opt/airlock/models
 In a checkout of the repository `make models` is the second command, for the folder `models/`.
 
 - **The model files** (29 MB) are fetched once by the second command, which is the only thing in
-  the library that uses the network. Their SHA-256 is in the package and is checked after the
-  download and again before every load. `python -m airlock_pii models verify` checks a
+  the library that uses the network: from the natasha project's storage, else from the
+  `natasha` wheel on PyPI, else from a release of this repository. Their SHA-256 is in the
+  package and is checked after the download and again before every load. `python -m airlock_pii models verify` checks a
   directory, and `download --from-wheel` takes the files out of a `natasha` wheel on disk, for
   a site with a package mirror and no other way out.
 - **On means on.** With `AIRLOCK_PII_NER=ru`, a missing file, a changed file or a missing extra
@@ -397,7 +398,7 @@ model (`presidio_ru`). **The notes under the tables are part of the result**: mo
 figures grade the library on data that its own generator made.
 
 <!-- benchmark:begin -->
-From [`bench/results/2026-10-09_compare.md`](https://github.com/airlockteam/airlock-pii/blob/main/bench/results/2026-10-09_compare.md). Data: `v1.jsonl`, 2,000 samples of which 400 are negatives, SHA-256 `3e003c8ec12a2b42`. Run on 2026-10-09.
+From [`bench/results/2026-10-18_compare.md`](https://github.com/airlockteam/airlock-pii/blob/main/bench/results/2026-10-18_compare.md). Data: `v1.jsonl`, 2,000 samples of which 400 are negatives, SHA-256 `3e003c8ec12a2b42`. Run on 2026-10-18.
 Of the samples, 1,623 are as typed, 167 in capitals and 210 with OCR-like noise.
 
 ### Recall / precision / F1 by type
@@ -406,7 +407,7 @@ A found span matches a labeled one of its type if the two share half or more of 
 
 | Type | Values | `airlock_pii` | `airlock_pii_ner` | `naive_regex` | `presidio_default` | `presidio_ru` |
 |---|---:|---:|---:|---:|---:|---:|
-| PERSON | 1,304 | 0.883 / 0.992 / 0.934 | 0.940 / 0.984 / 0.962 | 0.000 / – / 0.000 | 0.516 / 0.330 / 0.403 | 0.597 / 0.525 / 0.559 |
+| PERSON | 1,304 | 0.886 / 0.992 / 0.936 | 0.943 / 0.984 / 0.963 | 0.000 / – / 0.000 | 0.516 / 0.330 / 0.403 | 0.597 / 0.525 / 0.559 |
 | IIN | 528 | 0.930 / 0.994 / 0.961 | 0.930 / 0.994 / 0.961 | 0.930 / 0.649 / 0.765 | 0.000 / – / 0.000 | 0.000 / – / 0.000 |
 | BIN | 145 | 0.938 / 1.000 / 0.968 | 0.938 / 1.000 / 0.968 | 0.000 / – / 0.000 | 0.000 / – / 0.000 | 0.000 / – / 0.000 |
 | KZ_IBAN | 348 | 0.963 / 1.000 / 0.981 | 0.963 / 1.000 / 0.981 | 0.557 / 1.000 / 0.716 | 0.902 / 1.000 / 0.949 | 0.902 / 1.000 / 0.949 |
@@ -414,10 +415,10 @@ A found span matches a labeled one of its type if the two share half or more of 
 | PHONE | 424 | 0.965 / 0.998 / 0.981 | 0.965 / 0.998 / 0.981 | 0.965 / 0.958 / 0.961 | 0.604 / 0.496 / 0.545 | 0.604 / 0.496 / 0.545 |
 | EMAIL | 290 | 0.993 / 0.997 / 0.995 | 0.993 / 0.997 / 0.995 | 0.997 / 0.923 / 0.959 | 0.634 / 0.979 / 0.770 | 0.634 / 0.979 / 0.770 |
 | SECRET | 164 | 0.970 / 0.994 / 0.981 | 0.970 / 0.994 / 0.981 | 0.000 / – / 0.000 | 0.000 / – / 0.000 | 0.000 / – / 0.000 |
-| **All types** | 3,451 | 0.925 / 0.995 / 0.959 | 0.947 / 0.992 / 0.969 | 0.465 / 0.824 / 0.595 | 0.471 / 0.499 / 0.485 | 0.501 / 0.641 / 0.562 |
+| **All types** | 3,451 | 0.926 / 0.995 / 0.960 | 0.948 / 0.992 / 0.970 | 0.465 / 0.824 / 0.595 | 0.471 / 0.499 / 0.485 | 0.501 / 0.641 / 0.562 |
 | Negatives with a false positive | 400 | 1.2% | 2.2% | 42.0% | 60.5% | 38.5% |
 | Negatives with a span of another type | 400 | 0.0% | 0.0% | 0.0% | 92.5% | 57.2% |
-| Latency per sample, p95 |  | 0.19 ms | 1.54 ms | 0.03 ms | 9.55 ms | 11.35 ms |
+| Latency per sample, p95 |  | 0.19 ms | 1.45 ms | 0.03 ms | 9.28 ms | 11.79 ms |
 
 ### Would the value be masked?
 
@@ -425,9 +426,9 @@ The share of the values that one span of their type holds whole. A span that sto
 
 | Type | Values | `airlock_pii` | `airlock_pii_ner` | `naive_regex` | `presidio_default` | `presidio_ru` |
 |---|---:|---:|---:|---:|---:|---:|
-| PERSON | 1,304 | 0.873 | 0.928 | 0.000 | 0.482 | 0.521 |
+| PERSON | 1,304 | 0.877 | 0.931 | 0.000 | 0.482 | 0.521 |
 | PERSON as typed: names the library has on no list | 181 | 0.508 | 0.829 | 0.000 | 0.591 | 0.652 |
-| PERSON as typed: names from the library's own lists (circular) | 849 | 0.994 | 0.994 | 0.000 | 0.514 | 0.562 |
+| PERSON as typed: names from the library's own lists (circular) | 849 | 0.999 | 0.999 | 0.000 | 0.514 | 0.562 |
 | IIN | 528 | 0.930 | 0.930 | 0.930 | 0.000 | 0.000 |
 | BIN | 145 | 0.938 | 0.938 | 0.000 | 0.000 | 0.000 |
 | KZ_IBAN | 348 | 0.963 | 0.963 | 0.557 | 0.902 | 0.902 |
@@ -435,8 +436,8 @@ The share of the values that one span of their type holds whole. A span that sto
 | PHONE | 424 | 0.965 | 0.965 | 0.965 | 0.465 | 0.465 |
 | EMAIL | 290 | 0.990 | 0.990 | 0.990 | 0.634 | 0.634 |
 | SECRET | 164 | 0.963 | 0.963 | 0.000 | 0.000 | 0.000 |
-| **All types** | 3,451 | 0.921 | 0.942 | 0.465 | 0.441 | 0.456 |
-| All types, under a span of any type | 3,451 | 0.921 | 0.942 | 0.504 | 0.680 | 0.482 |
+| **All types** | 3,451 | 0.922 | 0.943 | 0.465 | 0.441 | 0.456 |
+| All types, under a span of any type | 3,451 | 0.922 | 0.943 | 0.504 | 0.680 | 0.482 |
 
 ### Read this with the tables
 

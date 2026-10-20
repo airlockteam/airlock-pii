@@ -1,6 +1,6 @@
 [project]
 name = "airlock-pii"
-version = "0.1.0rc1"
+version = "0.1.0"
 description = "Detects Kazakhstan personal data (IIN/BIN, IBAN, cards, phones, emails, names) and secrets in text."
 readme = "README.md"
 license = "Apache-2.0"

@@ -3,7 +3,7 @@
 Versions follow [PEP 440](https://peps.python.org/pep-0440/). While the version begins with
 0, a minor release may change the API.
 
-## 0.1.0 (not released yet)
+## 0.1.0 (2026-10-20)
 
 The first public release.
 
@@ -18,7 +18,8 @@ The first public release.
   passwords and named assignments, card codes, and hosts of the domains listed in
   `AIRLOCK_PII_INTERNAL_DOMAINS`.
 - **Extra `ner-ru`**: slovnet's Russian NER next to the rules. Its two model files are
-  fetched and checked by `python -m airlock_pii models download`.
+  fetched and checked by `python -m airlock_pii models download`, from the natasha project's
+  storage, its wheel on PyPI, or the release `models-v1` of this repository.
 - **Extra `presidio`**: `airlock_pii.presidio_adapter.EngineRecognizer`, the library as a
   recognizer of Presidio. Tested with presidio-analyzer 2.2.364.
 - **`airlock_pii.synthetic`**: values that pass every check and cannot be real ones, for
@@ -26,5 +27,6 @@ The first public release.
 - **Benchmark** in `bench/`: synthetic data, three baselines, and a methodology that says
   which figures are circular.
 
-Versions before this one were not published. The benchmark results of 2026-10-09 name
-`airlock-pii 0.0.1`, the number the same code had then.
+Before this one, only the release candidate 0.1.0rc1 was published, on TestPyPI. The
+benchmark results of 2026-10-09 name `airlock-pii 0.0.1`, the number the code had then; the
+README shows those of 2026-10-18, which name 0.1.0.

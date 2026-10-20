@@ -28,7 +28,7 @@ dev = [
 
 [[package]]
 name = "airlock-pii"
-version = "0.1.0rc1"
+version = "0.1.0"
 source = { editable = "packages/airlock-pii" }
 
 [package.optional-dependencies]
